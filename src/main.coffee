@@ -1,37 +1,87 @@
-angular.module('mdDateTime', [])
-.directive 'timeDatePicker', ['$filter', '$sce', '$rootScope', ($filter, $sce, $rootScope) ->
+angular.module('scDateTime', [])
+.value('scDateTimeConfig',
+	defaultTheme: 'material'
+	autosave: false
+	defaultMode: 'date'
+	defaultDate: undefined # should be date object!!
+	displayMode: undefined
+	defaultOrientation: false
+	displayTwentyfour: false
+).value('scDateTimeI18n',
+	previousMonth: "Previous Month"
+	nextMonth: "Next Month"
+	incrementHours: "Increment Hours"
+	decrementHours: "Decrement Hours"
+	incrementMinutes: "Increment Minutes"
+	decrementMinutes: "Decrement Minutes"
+	switchAmPm: "Switch AM/PM"
+	now: "Now"
+	cancel: "Cancel"
+	save: "Save"
+	weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+	switchTo: 'Switch to'
+	clock: 'Clock'
+	calendar: 'Calendar'
+).directive 'timeDatePicker', ['$filter', '$sce', '$rootScope', '$parse', 'scDateTimeI18n', 'scDateTimeConfig',
+($filter, $sce, $rootScope, $parse, scDateTimeI18n, scDateTimeConfig) ->
 	_dateFilter = $filter 'date'
 	restrict: 'AE'
 	replace: true
 	scope:
-		_cancel: '=onCancel'
-		_save: '=onSave'
-		_modelValue: '=ngModel'
+		_weekdays: '=?tdWeekdays'
 	require: 'ngModel'
-	templateUrl: 'md-date-time.tpl.html'
+	templateUrl: (tElement, tAttrs) -> 'scDateTime-' + (tAttrs.theme ? scDateTimeConfig.defaultTheme) + '.tpl'
 	link: (scope, element, attrs, ngModel) ->
-		attrs.$observe 'defaultMode', (val) -> scope._mode = val ? 'date'
-		attrs.$observe 'displayMode', (val) -> scope._displayMode = val
-		attrs.$observe 'orientation', (val) -> scope._verticalMode = val is 'true'
-		attrs.$observe 'displayTwentyfour', (val) -> scope._hours24 = val? and val
+		attrs.$observe 'defaultMode', (val) ->
+			if val isnt 'time' and val isnt 'date' then val = scDateTimeConfig.defaultMode
+			scope._mode = val
+		attrs.$observe 'defaultDate', (val) ->
+			scope._defaultDate = if val? and Date.parse val then Date.parse val
+			else scDateTimeConfig.defaultDate
+		attrs.$observe 'displayMode', (val) ->
+			if val isnt 'full' and val isnt 'time' and val isnt 'date' then val = scDateTimeConfig.displayMode
+			scope._displayMode = val
+		attrs.$observe 'orientation', (val) ->
+			scope._verticalMode = if val? then val is 'true' else scDateTimeConfig.defaultOrientation
+		attrs.$observe 'displayTwentyfour', (val) ->
+			scope._hours24 = if val? then val else scDateTimeConfig.displayTwentyfour
 		attrs.$observe 'mindate', (val) ->
-			if val? and angular.isDate val then scope.restrictions.mindate = val
+			if val? and Date.parse val
+				scope.restrictions.mindate = new Date val
+				scope.restrictions.mindate.setHours 0, 0, 0, 0
 		attrs.$observe 'maxdate', (val) ->
-			if val? and angular.isDate val then scope.restrictions.maxdate = val
-		ngModel.$render = -> scope.setDate ngModel.$modelValue
-		scope.save = ->
-			scope._modelValue = scope.date
-			ngModel.$setDirty()
-			scope._save? scope.date
-		scope.cancel = ->
-			scope._cancel?()
-			ngModel.$render()
-	controller: ['$scope', (scope) ->
+			if val? and Date.parse val
+				scope.restrictions.maxdate = new Date val
+				scope.restrictions.maxdate.setHours 23, 59, 59, 999
+		scope._weekdays = scope._weekdays or scDateTimeI18n.weekdays
+		scope.$watch '_weekdays', (value) ->
+			if not value? or not angular.isArray value
+				scope._weekdays = scDateTimeI18n.weekdays
+
+		ngModel.$render = -> scope.setDate ngModel.$modelValue or scope._defaultDate
+
+		scope.autosave = false
+		if attrs['autosave']? or scDateTimeConfig.autosave
+			scope.$watch 'date', ngModel.$setViewValue
+			scope.autosave = true
+		else
+			saveFn = $parse attrs.onSave
+			cancelFn = $parse attrs.onCancel
+
+			scope.save = ->
+				ngModel.$setViewValue new Date scope.date
+				saveFn scope.$parent, $value: new Date scope.date
+			scope.cancel = ->
+				cancelFn scope.$parent, {}
+				ngModel.$render()
+	controller: ['$scope', 'scDateTimeI18n', (scope, scDateTimeI18n) ->
+		scope._defaultDate = scDateTimeConfig.defaultDate
+		scope.translations = scDateTimeI18n
 		scope.restrictions =
 			mindate: undefined
 			maxdate: undefined
 		scope.setDate = (newVal) ->
-			scope.date = if newVal? then new Date newVal else new Date()
+			scope.date = if newVal then new Date newVal else new Date()
 			scope.calendar._year = scope.date.getFullYear()
 			scope.calendar._month = scope.date.getMonth()
 			scope.clock._minutes = scope.date.getMinutes()
@@ -53,23 +103,49 @@ angular.module('mdDateTime', [])
 			sub: ->
 				if scope._mode is 'date' then _dateFilter scope.date, 'yyyy'
 				else _dateFilter scope.date, 'HH:mm'
+
 		scope.calendar =
 			_month: 0
 			_year: 0
-			_months: (_dateFilter new Date(0, i), 'MMMM' for i in [0..11])
+			_months: []
+			_allMonths: (_dateFilter new Date(0, i), 'MMMM' for i in [0..11])
 			offsetMargin: -> "#{new Date(@_year, @_month).getDay() * 2.7}rem"
 			isVisible: (d) -> new Date(@_year, @_month, d).getMonth() is @_month
+			isDisabled: (d) ->
+				currentDate = new Date(@_year, @_month, d)
+				mindate = scope.restrictions.mindate
+				maxdate = scope.restrictions.maxdate
+				(mindate? and currentDate < mindate) or (maxdate? and currentDate > maxdate)
+			isVisibleMonthButton: (minOrMax) ->
+				date = scope.restrictions[minOrMax]
+				date? and @_month <= date.getMonth() and @_year <= date.getFullYear()
 			class: (d) ->
+				classString = ''
 				# coffeelint: disable=max_line_length
-				if scope.date? and new Date(@_year, @_month, d).getTime() is new Date(scope.date.getTime()).setHours(0,0,0,0) then "selected"
-				else if new Date(@_year, @_month, d).getTime() is new Date().setHours(0,0,0,0) then "today"
-				else ""
-				# coffeelint: enable=max_line_length
+				if scope.date? and new Date(@_year, @_month, d).getTime() is new Date(scope.date.getTime()).setHours(0,
+					0, 0, 0)
+					classString += "selected"
+				if new Date(@_year, @_month, d).getTime() is new Date().setHours(0, 0, 0, 0)
+					classString += " today"
+				classString
+# coffeelint: enable=max_line_length
 			select: (d) -> scope.date.setFullYear @_year, @_month, d
 			monthChange: ->
 				if not @_year? or isNaN @_year then @_year = new Date().getFullYear()
+				mindate = scope.restrictions.mindate
+				maxdate = scope.restrictions.maxdate
+				if mindate? and mindate.getFullYear() is @_year and mindate.getMonth() >= @_month
+					@_month = Math.max mindate.getMonth(), @_month
+				if maxdate? and maxdate.getFullYear() is @_year and maxdate.getMonth() <= @_month
+					@_month = Math.min maxdate.getMonth(), @_month
 				scope.date.setFullYear @_year, @_month
 				if scope.date.getMonth() isnt @_month then scope.date.setDate 0
+				if mindate? and scope.date < mindate
+					scope.date.setDate mindate.getTime()
+					scope.calendar.select mindate.getDate()
+				if maxdate? and scope.date > maxdate
+					scope.date.setDate maxdate.getTime()
+					scope.calendar.select maxdate.getDate()
 			_incMonth: (months) ->
 				@_month += months
 				while @_month < 0 or @_month > 11
@@ -91,7 +167,7 @@ angular.module('mdDateTime', [])
 			_incMinutes: (inc) ->
 				@_minutes = Math.max 0, Math.min 59, @_minutes + inc
 				if isNaN @_minutes then @_minutes = 0
-			setAM: (b=not @isAM()) ->
+			setAM: (b = not @isAM()) ->
 				if b and not @isAM()
 					scope.date.setHours(scope.date.getHours() - 12)
 				else if not b and @isAM()
@@ -106,16 +182,29 @@ angular.module('mdDateTime', [])
 					else if val is 12 then val = 0
 					else if not scope.clock.isAM() then val += 12
 				if val isnt scope.date.getHours() then scope.date.setHours val
+		scope.$watch 'calendar._year', (val) ->
+			if not val? or val is '' then return
+			mindate = scope.restrictions.mindate
+			maxdate = scope.restrictions.maxdate
+			i = if mindate? and mindate.getFullYear() is scope.calendar._year then mindate.getMonth() else 0
+			len = if maxdate? and maxdate.getFullYear() is scope.calendar._year then maxdate.getMonth() else 11
+			scope.calendar._months = scope.calendar._allMonths.slice i, len + 1
+			scope.calendar.monthChange()
+
 		scope.setNow = -> scope.setDate()
-		scope._mode = 'date'
+		scope._mode = scDateTimeConfig.defaultMode
+		scope._displayMode = scDateTimeConfig.displayMode
+		scope._verticalMode = scDateTimeConfig.defaultOrientation
+		scope._hours24 = scDateTimeConfig.displayTwentyfour
 		scope.modeClass = ->
 			if scope._displayMode? then scope._mode = scope._displayMode
-			"#{if scope._verticalMode? and scope._verticalMode then 'vertical ' else ''}#{
+			"#{if scope._verticalMode then 'vertical ' else ''}#{
 			if scope._displayMode is 'full' then 'full-mode'
 			else if scope._displayMode is 'time' then 'time-only'
 			else if scope._displayMode is 'date' then 'date-only'
 			else if scope._mode is 'date' then 'date-mode'
 			else 'time-mode'}"
 		scope.modeSwitch = -> scope._mode = scope._displayMode ? if scope._mode is 'date' then 'time' else 'date'
-		scope.modeSwitchText = -> if scope._mode is 'date' then 'Clock' else 'Calendar'
-]]
+		scope.modeSwitchText = -> scDateTimeI18n.switchTo + ' ' +
+			if scope._mode is 'date' then scDateTimeI18n.clock else scDateTimeI18n.calendar
+	]]
