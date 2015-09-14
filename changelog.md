@@ -1,3 +1,21 @@
+## 1.0.0 (2015-09-15)
+
+
+#### Bug Fixes
+
+* **yearInput:** Can remove whole year then type in a new one ([2922f98b](git://github.com/simeonc/sc-date-time.git/commit/2922f98b6de2e2308c4cafc02a5fdc8cd9934de4))
+
+
+#### Features
+
+* **autosave:** Allow autosave option ([b58b6875](git://github.com/simeonc/sc-date-time.git/commit/b58b6875a56f422c2ad1605cfd64e20db341800b), closes [#21](git://github.com/simeonc/sc-date-time.git/issues/21))
+* **default-date:** Add a default date value ([1743f001](git://github.com/simeonc/sc-date-time.git/commit/1743f001098f2b10e57bf91ca8a816369a53d792), closes [#17](git://github.com/simeonc/sc-date-time.git/issues/17))
+* **scDateTime:** Change to scDateTime, add placeholder for bootstrap template ([670b2442](git://github.com/simeonc/sc-date-time.git/commit/670b2442e0005cfc6b8a454fa4eeda12f99cdc5f))
+* **scDateTimeI18n:** Add full multilingual capabilities via new module value ([6e10028e](git://github.com/simeonc/sc-date-time.git/commit/6e10028e239f4008100ddfac369ce999c1f5fd59), closes [#13](git://github.com/simeonc/sc-date-time.git/issues/13))
+* **theme:** Added the theme switcher attribute and added config as well ([6c264dac](git://github.com/simeonc/sc-date-time.git/commit/6c264dacae05b24fc6e1e083d08f218a7449b6ea))
+* **themeing:** Add bootstrap theme option ([8949c01c](git://github.com/simeonc/sc-date-time.git/commit/8949c01c8ccea7a73724a42594a7b85e35a1d321))
+
+
 ## 0.1.0 (2015-09-14)
 
 

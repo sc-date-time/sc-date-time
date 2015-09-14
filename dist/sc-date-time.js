@@ -2,7 +2,7 @@
 	@license sc-date-time
 	@author SimeonC
 	@license 2015 MIT
-	@version 0.1.0
+	@version 1.0.0
 	
 	See README.md for requirements and use.
 */angular.module('scDateTime', []).value('scDateTimeConfig', {

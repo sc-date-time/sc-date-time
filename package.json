@@ -1,7 +1,7 @@
 {
-  "name": "md-date-time",
-  "filename": "md-date-time.min.js",
-  "version": "0.1.0",
+  "name": "sc-date-time",
+  "filename": "sc-date-time.min.js",
+  "version": "1.0.0",
   "description": "An implementation of the Material Design Date-Time picker",
   "maintainers": [
     {
@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "homepage": "http://simeonc.github.io/md-date-time",
-  "main": "./dist/md-date-time.min.js",
+  "main": "./dist/sc-date-time.min.js",
   "devDependencies": {
     "bower": "^1.3.12",
     "coffee-script": "^1.8.0",
@@ -45,6 +45,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/simeonc/md-date-time.git"
+    "url": "git://github.com/simeonc/sc-date-time.git"
   }
 }

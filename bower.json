@@ -1,6 +1,6 @@
 {
   "name": "sc-date-time",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": [
     "./dist/sc-date-time.js",
     "./dist/sc-date-time.css"
