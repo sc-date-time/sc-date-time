@@ -1,1 +1,3 @@
-console.log('This would be the main JS file.');
+angular.module('testMod', ['ngMaterial','scDateTime']).controller('testCtrl', function($scope) {
+	return $scope.date = new Date();
+});
