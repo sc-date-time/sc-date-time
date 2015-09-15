@@ -1,3 +1,11 @@
+### 1.0.2 (2015-09-15)
+
+
+#### Bug Fixes
+
+* **bootstrap:** Some bootstrap issues fixed ([29f98f22](git://github.com/simeonc/sc-date-time.git/commit/29f98f228b2201773346ed75af23c06e909d6cfa))
+
+
 ### 1.0.1 (2015-09-15)
 
 
