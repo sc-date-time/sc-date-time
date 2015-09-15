@@ -81,6 +81,11 @@ angular.module('scDateTime', [])
 				ngModel.$render()
 	controller: ['$scope', 'scDateTimeI18n', (scope, scDateTimeI18n) ->
 		scope._defaultDate = scDateTimeConfig.defaultDate
+		scope._mode = scDateTimeConfig.defaultMode
+		scope._displayMode = scDateTimeConfig.displayMode
+		scope._verticalMode = scDateTimeConfig.defaultOrientation
+		scope._hours24 = scDateTimeConfig.displayTwentyfour
+		scope._compact = scDateTimeConfig.compact
 		scope.translations = scDateTimeI18n
 		scope.restrictions =
 			mindate: undefined
@@ -201,10 +206,6 @@ angular.module('scDateTime', [])
 			scope.calendar.monthChange()
 
 		scope.setNow = -> scope.setDate()
-		scope._mode = scDateTimeConfig.defaultMode
-		scope._displayMode = scDateTimeConfig.displayMode
-		scope._verticalMode = scDateTimeConfig.defaultOrientation
-		scope._hours24 = scDateTimeConfig.displayTwentyfour
 		scope.modeClass = ->
 			if scope._displayMode? then scope._mode = scope._displayMode
 			"#{if scope._verticalMode then 'vertical ' else ''}#{

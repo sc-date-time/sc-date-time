@@ -116,6 +116,11 @@
         '$scope', 'scDateTimeI18n', function(scope, scDateTimeI18n) {
           var i;
           scope._defaultDate = scDateTimeConfig.defaultDate;
+          scope._mode = scDateTimeConfig.defaultMode;
+          scope._displayMode = scDateTimeConfig.displayMode;
+          scope._verticalMode = scDateTimeConfig.defaultOrientation;
+          scope._hours24 = scDateTimeConfig.displayTwentyfour;
+          scope._compact = scDateTimeConfig.compact;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
             mindate: void 0,
@@ -317,10 +322,6 @@
           scope.setNow = function() {
             return scope.setDate();
           };
-          scope._mode = scDateTimeConfig.defaultMode;
-          scope._displayMode = scDateTimeConfig.displayMode;
-          scope._verticalMode = scDateTimeConfig.defaultOrientation;
-          scope._hours24 = scDateTimeConfig.displayTwentyfour;
           scope.modeClass = function() {
             if (scope._displayMode != null) {
               scope._mode = scope._displayMode;
