@@ -40,8 +40,10 @@
       },
       require: 'ngModel',
       templateUrl: function(tElement, tAttrs) {
-        var ref;
-        return 'scDateTime-' + ((ref = tAttrs.theme) != null ? ref : scDateTimeConfig.defaultTheme) + '.tpl';
+        if ((tAttrs.theme == null) || tAttrs.theme === '') {
+          tAttrs.theme = scDateTimeConfig.defaultTheme;
+        }
+        return 'scDateTime-' + tAttrs.theme + '.tpl';
       },
       link: function(scope, element, attrs, ngModel) {
         var cancelFn, saveFn;

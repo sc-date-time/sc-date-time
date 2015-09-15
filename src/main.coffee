@@ -30,7 +30,9 @@ angular.module('scDateTime', [])
 	scope:
 		_weekdays: '=?tdWeekdays'
 	require: 'ngModel'
-	templateUrl: (tElement, tAttrs) -> 'scDateTime-' + (tAttrs.theme ? scDateTimeConfig.defaultTheme) + '.tpl'
+	templateUrl: (tElement, tAttrs) ->
+		if not tAttrs.theme? or tAttrs.theme is '' then tAttrs.theme = scDateTimeConfig.defaultTheme
+		return 'scDateTime-' + tAttrs.theme + '.tpl'
 	link: (scope, element, attrs, ngModel) ->
 		attrs.$observe 'defaultMode', (val) ->
 			if val isnt 'time' and val isnt 'date' then val = scDateTimeConfig.defaultMode
