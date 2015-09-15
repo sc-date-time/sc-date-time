@@ -1,3 +1,11 @@
+### 1.0.1 (2015-09-15)
+
+
+#### Bug Fixes
+
+* **themeDefault:** Theme default attribute is correctly set when defaulted ([07bfd100](git://github.com/simeonc/sc-date-time.git/commit/07bfd100b1238dce546bf2eeae1276beb41b4f4d))
+
+
 ## 1.0.0 (2015-09-15)
 
 
