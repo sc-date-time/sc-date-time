@@ -1,3 +1,11 @@
+### 1.1.1 (2015-09-16)
+
+
+#### Bug Fixes
+
+* **config:** Respect compact default ([7bc834d9](git://github.com/simeonc/sc-date-time.git/commit/7bc834d996502f92b08da3769a610c6e4c9aed59))
+
+
 ## 1.1.0 (2015-09-16)
 
 
