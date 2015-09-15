@@ -1,3 +1,11 @@
+## 1.1.0 (2015-09-16)
+
+
+#### Features
+
+* **compact:** Add a compact mode for more versatility of use ([3b797fc2](git://github.com/simeonc/sc-date-time.git/commit/3b797fc2b655ff451f1be560520beca868bb975e))
+
+
 ### 1.0.2 (2015-09-15)
 
 
