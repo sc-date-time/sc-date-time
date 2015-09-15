@@ -294,6 +294,15 @@ clock-radius = 75
 			& > button
 				/* Invert colours for bottom bar */
 				color: $selected-text-colour !important
+	&:not(.full-mode).compact
+		width: 22.8rem
+		& > .display
+			display: none
+		& > .control
+			width: 100%
+			height: 23.2rem
+			& > .full-title
+				display: block
 
 vertical-orient()
 	width: 23.1rem

@@ -353,6 +353,19 @@
 /* Invert colours for bottom bar */
   color: #fff !important;
 }
+.time-date:not(.full-mode).compact {
+  width: 22.8rem;
+}
+.time-date:not(.full-mode).compact > .display {
+  display: none;
+}
+.time-date:not(.full-mode).compact > .control {
+  width: 100%;
+  height: 23.2rem;
+}
+.time-date:not(.full-mode).compact > .control > .full-title {
+  display: block;
+}
 .time-date.vertical {
   width: 23.1rem;
 }

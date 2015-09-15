@@ -51,6 +51,7 @@ Download the code from [https://github.com/simeonc/sc-date-time/releases/latest]
 * **display-mode** Options are "full"; display time and date selectors and no display, "time"; show only the time input, "date"; show only the date input. Default value is set via the `scDateTimeConfig.displayMode` property.
 * **orientation** If this string value is 'true' then the picker will be in vertical mode. Otherwise it will change to vertical mode if the screen width is less than 51rem as that is the size of the editor. Default value is set via the `scDateTimeConfig.defaultOrientation` property.
 * **display-twentyfour** If this value is truthy then display 24 hours in time, else use 12 hour time. Default value is set via the `scDateTimeConfig.displayTwentyfour` property.
+* **compact** If this string value is 'true' then the picker will be in a compact mode, this hides the large title display to the left. Note that display-mode="full" ignores this setting. Default value is set via the `scDateTimeConfig.compact` property.
 * **mindate** A date string that represents the minimum selectable date/time
 * **maxdate** A date string that represents the maximum selectable date/time
 * **weekdays** Optionally bind an array of strings, this defaults to the englist S, M, T, W etc. Intended for full multilanguage support on directive level.
@@ -90,7 +91,8 @@ Default values for globally configurable options as follows:
 	defaultDate: undefined, //should be date object!!
 	displayMode: undefined,
 	defaultOrientation: false,
-	displayTwentyfour: false
+	displayTwentyfour: false,
+	compact: false
 })
 ```
 

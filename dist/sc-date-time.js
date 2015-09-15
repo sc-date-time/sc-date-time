@@ -12,7 +12,8 @@
   defaultDate: void 0,
   displayMode: void 0,
   defaultOrientation: false,
-  displayTwentyfour: false
+  displayTwentyfour: false,
+  compact: false
 }).value('scDateTimeI18n', {
   previousMonth: "Previous Month",
   nextMonth: "Next Month",
@@ -43,7 +44,7 @@
         if ((tAttrs.theme == null) || tAttrs.theme === '') {
           tAttrs.theme = scDateTimeConfig.defaultTheme;
         }
-        return 'scDateTime-' + tAttrs.theme + '.tpl';
+        return "scDateTime-" + tAttrs.theme + ".tpl";
       },
       link: function(scope, element, attrs, ngModel) {
         var cancelFn, saveFn;
@@ -64,6 +65,9 @@
         });
         attrs.$observe('orientation', function(val) {
           return scope._verticalMode = val != null ? val === 'true' : scDateTimeConfig.defaultOrientation;
+        });
+        attrs.$observe('compact', function(val) {
+          return scope._compact = val != null ? val === 'true' : scDateTimeConfig.compact;
         });
         attrs.$observe('displayTwentyfour', function(val) {
           return scope._hours24 = val != null ? val : scDateTimeConfig.displayTwentyfour;
@@ -129,7 +133,15 @@
           };
           scope.display = {
             fullTitle: function() {
-              return _dateFilter(scope.date, 'EEEE d MMMM yyyy, h:mm a');
+              if (scope._displayMode === 'full' && !scope._verticalMode) {
+                return _dateFilter(scope.date, 'EEEE d MMMM yyyy, h:mm a');
+              } else if (scope._displayMode === 'time') {
+                return _dateFilter(scope.date, 'h:mm a');
+              } else if (scope._displayMode === 'date') {
+                return _dateFilter(scope.date, 'EEE d MMM yyyy');
+              } else {
+                return _dateFilter(scope.date, 'd MMM yyyy, h:mm a');
+              }
             },
             title: function() {
               if (scope._mode === 'date') {
@@ -313,7 +325,7 @@
             if (scope._displayMode != null) {
               scope._mode = scope._displayMode;
             }
-            return "" + (scope._verticalMode ? 'vertical ' : '') + (scope._displayMode === 'full' ? 'full-mode' : scope._displayMode === 'time' ? 'time-only' : scope._displayMode === 'date' ? 'date-only' : scope._mode === 'date' ? 'date-mode' : 'time-mode');
+            return "" + (scope._verticalMode ? 'vertical ' : '') + (scope._displayMode === 'full' ? 'full-mode' : scope._displayMode === 'time' ? 'time-only' : scope._displayMode === 'date' ? 'date-only' : scope._mode === 'date' ? 'date-mode' : 'time-mode') + " " + (scope._compact ? 'compact' : '');
           };
           scope.modeSwitch = function() {
             var ref;
