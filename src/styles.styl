@@ -50,17 +50,19 @@ clock-radius = 75
 			font-weight: inherit
 			font-size: inherit
 		& > .control > .slider > .date-control > .days > .day-cell
+			line-height: 2.3rem
+			border-radius: 3px
 			&.today
 				position: relative
 				&::after
 					content: " "
 					position: absolute
-					bottom: 3px
-					right: 3px
+					bottom: 0.2rem
+					right: 0.2rem
 					width: 0
 					height: 0
 					border-style: solid
-					border-width: 0 0 0.6rem 0.6rem
+					border-width: 0 0 0.5rem 0.5rem
 					border-color: transparent transparent currentColor transparent
 
 	&[theme=material], &:not([theme])
@@ -170,8 +172,9 @@ clock-radius = 75
 					width: 2.5rem
 					height: 2.5rem
 					margin: 0.1rem
-					padding: 0rem 6px
+					padding: 0
 					cursor: pointer
+					font-size: 1.3rem
 				& > .days
 					font-size: 1rem
 					padding-left: 1.5rem
