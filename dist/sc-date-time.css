@@ -2,7 +2,7 @@
 	@license sc-date-time
 	@author SimeonC
 	@license 2015 MIT
-	@version 1.1.1
+	@version 1.1.2
 	
 	See README.md for requirements and use.
 *//* Start Variable Declaration */
@@ -29,6 +29,10 @@
 .time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell {
   line-height: 2.3rem;
   border-radius: 3px;
+  text-decoration: none;
+}
+.time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell:hover {
+  text-decoration: none;
 }
 .time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell.today {
   position: relative;

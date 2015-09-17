@@ -1,3 +1,11 @@
+### 1.1.2 (2015-09-17)
+
+
+#### Bug Fixes
+
+* **bootstrap:** Fix bootstrap buttons such that ng-disabled works again ([9360a41c](git://github.com/simeonc/sc-date-time.git/commit/9360a41ccb3aae043a7b5b74753f9927d2ab6bee))
+
+
 ### 1.1.1 (2015-09-16)
 
 
