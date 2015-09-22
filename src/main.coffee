@@ -65,6 +65,12 @@ angular.module('scDateTime', [])
 
 		ngModel.$render = -> scope.setDate ngModel.$modelValue or scope._defaultDate
 
+		# Select contents of inputs when foccussed into
+		angular.forEach element.find('input'),
+			(input) ->
+				angular.element(input).on 'focus', ->
+					setTimeout (-> input.select()), 10
+
 		scope.autosave = false
 		if attrs['autosave']? or scDateTimeConfig.autosave
 			scope.$watch 'date', ngModel.$setViewValue

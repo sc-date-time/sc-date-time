@@ -93,6 +93,13 @@
         ngModel.$render = function() {
           return scope.setDate(ngModel.$modelValue || scope._defaultDate);
         };
+        angular.forEach(element.find('input'), function(input) {
+          return angular.element(input).on('focus', function() {
+            return setTimeout((function() {
+              return input.select();
+            }), 10);
+          });
+        });
         scope.autosave = false;
         if ((attrs['autosave'] != null) || scDateTimeConfig.autosave) {
           scope.$watch('date', ngModel.$setViewValue);
