@@ -26,10 +26,12 @@ htmlmin = require 'gulp-htmlmin'
 gulp.task 'clean:dist', (cb) -> del ['dist/*'], cb
 gulp.task 'compile:jade', ['clean:dist'], ->
 	gulp.src ['./src/*.jade']
-		.pipe jade()
+		.pipe jade
+			pretty: true
 		.pipe rename
 			prefix: 'scDateTime-'
 			extname: '.tpl'
+		.pipe gulp.dest 'dist'
 		.pipe htmlmin collapseWhitespace: true
 		.pipe ngtemplate module: 'scDateTime'
 		.pipe rename extname: '.tpl.temp' # for temp file cleanup
