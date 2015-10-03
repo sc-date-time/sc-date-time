@@ -26,27 +26,143 @@
         <h2>A Date-Time picker based on Googles Material Design Spec</h2>
         <a href="https://github.com/SimeonC/sc-date-time" class="button"><small>View project on</small> GitHub</a>
       </div>
+      <div class="inner">
+	    <nav>
+	        <span><a href="/index.html" class="active">Home</a></span>
+		    <span><a href="/bootstrap.html">Bootstrap Demo</a></span>
+		    <span><a href="/material.html">Material Demo</a></span>
+		    <span><a href="/customisation.html">Customisation</a></span>
+	    </nav>
+      </div>
     </header>
 
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content" ng-app="testMod" ng-controller="testCtrl">
-	        <h3>
-<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo's</h3>
-			<p>Change Locale by including correct i18n file, eg http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.15/angular-locale_ko-kr.js</p>
-			<p>Display in Vertical Mode {{vertmode}} 
-			<input type="checkbox" ng-model="vertmode"/>
-			</p>
-			<p>Basic Mode: {{date | date:'yyyy/MM/dd HH:mm a'}}</p>
-			<time-date-picker ng-model="date" orientation="{{vertmode}}" class="modal-content"></time-date-picker>
-			<p>Full Mode: {{date | date:'yyyy/MM/dd HH:mm a'}}</p>
-			<time-date-picker ng-model="date" data-display-mode="full" orientation="{{vertmode}}" class="modal-content"></time-date-picker>
-			<p>Start on Time, With 24 Hour: {{date | date:'yyyy/MM/dd HH:mm a'}}</p>
-			<time-date-picker ng-model="date" default-mode="time" display-twentyfour="true" orientation="{{vertmode}}" class="modal-content"></time-date-picker>
-			<p>Time Only: {{date | date:'yyyy/MM/dd HH:mm a'}}</p>
-			<time-date-picker ng-model="date" display-mode="time" orientation="{{vertmode}}" class="modal-content"></time-date-picker>
-			<p>Date Only: {{date | date:'yyyy/MM/dd HH:mm a'}}</p>
-			<time-date-picker ng-model="date" display-mode="date" orientation="{{vertmode}}" class="modal-content"></time-date-picker>
+		<h2><a id="user-content-requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+		
+		<ol>
+		<li><code>AngularJS</code> ≥ <code>1.2.x</code></li>
+		<li><code>FontAwesome</code> ≥ <code>4.2.x</code></li>
+		</ol>
+		
+		<h3><a id="user-content-optional-recommended-requirements" class="anchor" href="#optional-recommended-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optional Recommended Requirements</h3>
+		
+		<ol>
+		<li><a href="https://github.com/angular/material">Angular-Material</a></li>
+		<li><a href="http://getbootstrap.com">Bootstrap</a> (Note with bootstrap &lt;= v3 a default font-size of 16px is recommended as all sizes are set via rem)</li>
+		</ol>
+		
+		<h2><a id="user-content-where-to-get-it" class="anchor" href="#where-to-get-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>Where to get it</h2>
+		
+		<p><strong>Via Bower:</strong></p>
+		
+		<p>Run <code>bower install sc-date-time</code> from the command line.
+		Include script tags similar to the following:</p>
+		
+		<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">'</span>stylesheet<span class="pl-pds">'</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">'</span>/bower_components/sc-date-time/dist/sc-date-time.css<span class="pl-pds">'</span></span>&gt;
+		&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">'</span>/bower_components/sc-date-time/dist/sc-date-time.js<span class="pl-pds">'</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+		
+		<p><strong>Via Github:</strong></p>
+		
+		<p>Download the code from <a href="https://github.com/simeonc/sc-date-time/releases/latest">https://github.com/simeonc/sc-date-time/releases/latest</a>, unzip the files then add script tags similar to the following:</p>
+		
+		<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">'</span>stylesheet<span class="pl-pds">'</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">'</span>/path/to/unzipped/files/sc-date-time/dist/sc-date-time.css<span class="pl-pds">'</span></span>&gt;
+		&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">'</span>/path/to/unzipped/files/sc-date-time/dist/sc-date-time.js<span class="pl-pds">'</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+		
+		<h2><a id="user-content-usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+		
+		<ol>
+		<li>Include <code>sc-date-time.js</code> and <code>sc-date-time.css</code>.</li>
+		<li>Add a dependency to <code>scDateTime</code> in your app module, for example: <code>angular.module('myModule', ['scDateTime'])</code>.</li>
+		<li>Some implementation settings are required to get this useful, but for basic inline use:</li>
+		</ol>
+		
+		<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">time</span><span class="pl-e">-date-picker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>dateValue<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">time</span><span class="pl-e">-date-picker</span>&gt;</pre></div>
+		
+		<h2><a id="user-content-options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+		
+		<ul>
+		<li><strong>theme:</strong> String representing one of the supported themes, default value is set via the <code>scDateTimeConfig.defaultTheme</code> property.</li>
+		<li><strong>autosave:</strong> If this attribute is present the cancel and save buttons are removed and their respective events do not fire. The model is updated as the picker changes. Default value is set via the <code>scDateTimeConfig.autosave</code> property.</li>
+		<li><strong>on-cancel:</strong> Function passed in is called if the cancel button is pressed. <code>on-cancel="cancelFn()"</code></li>
+		<li><strong>on-save:</strong> Function passed in is called when the date is saved via the OK button, date value is available as $value. <code>on-save="saveFn($value)"</code></li>
+		<li><strong>default-mode:</strong> A string of value 'date'/'time', which side of the slider that should be shown initially, overridden by display-mode. Default value is set via the <code>scDateTimeConfig.defaultMode</code> property.</li>
+		<li><strong>default-date:</strong> A date-time string that the selects the date should the model be null. Defaults to today (new Date()). Default can be overridden globally via <code>scDateTimeConfig.defaultDate</code> property.</li>
+		<li><strong>display-mode:</strong> Options are "full"; display time and date selectors and no display, "time"; show only the time input, "date"; show only the date input. Default value is set via the <code>scDateTimeConfig.displayMode</code> property.</li>
+		<li><strong>orientation:</strong> If this string value is 'true' then the picker will be in vertical mode. Otherwise it will change to vertical mode if the screen width is less than 51rem as that is the size of the editor. Default value is set via the <code>scDateTimeConfig.defaultOrientation</code> property.</li>
+		<li><strong>display-twentyfour:</strong> If this value is truthy then display 24 hours in time, else use 12 hour time. Default value is set via the <code>scDateTimeConfig.displayTwentyfour</code> property.</li>
+		<li><strong>compact:</strong> If this string value is 'true' then the picker will be in a compact mode, this hides the large title display to the left. Note that display-mode="full" ignores this setting. Default value is set via the <code>scDateTimeConfig.compact</code> property.</li>
+		<li><strong>mindate:</strong> A date string that represents the minimum selectable date/time</li>
+		<li><strong>maxdate:</strong> A date string that represents the maximum selectable date/time</li>
+		<li><strong>weekdays:</strong> Optionally bind an array of strings, this defaults to the englist S, M, T, W etc. Intended for full multilanguage support on directive level.</li>
+		</ul>
+		
+		<h4><a id="user-content-scdatetimei18n" class="anchor" href="#scdatetimei18n" aria-hidden="true"><span class="octicon octicon-link"></span></a>scDateTimeI18n</h4>
+		
+		<p>Currently there is a value defined on the module which has all of the aria-label and text values for the entire picker. This can be overwritten for full multilanguage support as follows (all defaults shown):</p>
+		
+		<div class="highlight highlight-source-js"><pre>angular.module(<span class="pl-s"><span class="pl-pds">'</span>testMod<span class="pl-pds">'</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>scDateTime<span class="pl-pds">'</span></span>]).<span class="pl-c1">value</span>(<span class="pl-s"><span class="pl-pds">'</span>scDateTimeI18n<span class="pl-pds">'</span></span>, {
+		    previousMonth<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Previous Month<span class="pl-pds">"</span></span>,
+		    nextMonth<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Next Month<span class="pl-pds">"</span></span>,
+		    incrementHours<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Increment Hours<span class="pl-pds">"</span></span>,
+		    decrementHours<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Decrement Hours<span class="pl-pds">"</span></span>,
+		    incrementMinutes<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Increment Minutes<span class="pl-pds">"</span></span>,
+		    decrementMinutes<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Decrement Minutes<span class="pl-pds">"</span></span>,
+		    switchAmPm<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Switch AM/PM<span class="pl-pds">"</span></span>,
+		    now<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Now<span class="pl-pds">"</span></span>,
+		    cancel<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Cancel<span class="pl-pds">"</span></span>,
+		    save<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Save<span class="pl-pds">"</span></span>,
+		    weekdays<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>S<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>M<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>T<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>W<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>T<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>F<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>S<span class="pl-pds">'</span></span>],
+		    switchTo<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Switch to<span class="pl-pds">'</span></span>,
+		    clock<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Clock<span class="pl-pds">'</span></span>,
+		    calendar<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Calendar<span class="pl-pds">'</span></span>
+		});</pre></div>
+		
+		<h4><a id="user-content-scdatetimeconfig" class="anchor" href="#scdatetimeconfig" aria-hidden="true"><span class="octicon octicon-link"></span></a>scDateTimeConfig</h4>
+		
+		<p>Default values for globally configurable options as follows:</p>
+		
+		<div class="highlight highlight-source-js"><pre>.<span class="pl-c1">value</span>(<span class="pl-s"><span class="pl-pds">'</span>scDateTimeConfig<span class="pl-pds">'</span></span>, {
+		    defaultTheme<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>material<span class="pl-pds">'</span></span>,
+		    autosave<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+		    defaultMode<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>date<span class="pl-pds">'</span></span>,
+		    defaultDate<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">//should be date object!!</span>
+		    displayMode<span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
+		    defaultOrientation<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+		    displayTwentyfour<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+		    compact<span class="pl-k">:</span> <span class="pl-c1">false</span>
+		})</pre></div>
+		
+		<h2><a id="user-content-issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues?</h2>
+		
+		<p>It has been tested to work on Chrome, Safari, Opera, Firefox and Internet Explorer 8+.
+		If you find something, please let me know - throw me a message, or submit an issue request!</p>
+		
+		<h2><a id="user-content-faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
+		
+		<p>Q. <strong>The editor appears at a strange size?</strong>
+		A: The editor is sized using REM, so try changing the font-size, or at least the font-size at the editor base. I find the following works well:</p>
+		
+		<div class="highlight highlight-source-css"><pre><span class="pl-e">.time-date</span> {
+		    <span class="pl-c1"><span class="pl-c1">font-size</span></span>: <span class="pl-c1">14<span class="pl-k">px</span></span> <span class="pl-k">!important</span>;
+		}</pre></div>
+		
+		<h2><a id="user-content-developer-notes" class="anchor" href="#developer-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developer Notes</h2>
+		
+		<p>When checking out, you need a node.js installation, running <code>npm install</code> will get you setup with everything to run the compile and unit tests tasks (Coming Soon!).
+		All changes should be done in the lib folder, running <code>gulp compile</code> to compile the app or use <code>gulp watch</code> to compile the files as you save them.
+		Read the CONTRIBUTING.md file before starting a PR.</p>
+		
+		<h2><a id="user-content-license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+		
+		<p>This project is licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+		
+		<h2><a id="user-content-contributers" class="anchor" href="#contributers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributers</h2>
+		
+		<p>Special thanks to all the contributions thus far!</p>
+		
+		<p>For a full list see: <a href="https://github.com/simeonc/sc-date-time/graphs/contributors">https://github.com/simeonc/sc-date-time/graphs/contributors</a></p>
         </section>
 
         <aside id="sidebar">
@@ -66,7 +182,7 @@
       </div>
     </div>
 
-  <script type="text/javascript" src="javascripts/angular.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-animate.min.js"></script>
   <script type="text/javascript" src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>

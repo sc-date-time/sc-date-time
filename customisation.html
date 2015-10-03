@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+	    table td, table th {
+		    text-align: left;
+	    }
+    </style>
+
+    <title>sc-date-time by SimeonC</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>sc-date-time</h1>
+        <h2>A Date-Time picker based on Googles Material Design Spec</h2>
+        <a href="https://github.com/SimeonC/sc-date-time" class="button"><small>View project on</small> GitHub</a>
+      </div>
+      <div class="inner">
+	    <nav>
+	        <span><a href="/index.html">Home</a></span>
+		    <span><a href="/bootstrap.html">Bootstrap Demo</a></span>
+		    <span><a href="/material.html">Material Demo</a></span>
+		    <span><a href="/customisation.html" class="active">Customisation</a></span>
+	    </nav>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content" ng-app="testMod" ng-controller="testCtrl">
+	        <h2><a id="customisation" class="anchor" href="#customisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customisation</h2>
+			<p>Customisation of the sc-date-time plugin has three main parts <a href="#attributes">Attributes</a>, <a href="#config">Configs</a> and <a href="#templates">Templates</a>. Also covered is <a href="#i18n">internationalisation</a></p>
+			<h3><a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h3>
+			<p>The following attributes allow you to change settings on each instance of the date-time picker.</p>
+			<ul>
+				<li><strong>theme:</strong> String representing one of the supported themes, default value is set via the <code>scDateTimeConfig.defaultTheme</code> property.</li>
+				<li><strong>autosave:</strong> If this attribute is present the cancel and save buttons are removed and their respective events do not fire. The model is updated as the picker changes. Default value is set via the <code>scDateTimeConfig.autosave</code> property.</li>
+				<li><strong>on-cancel:</strong> Function passed in is called if the cancel button is pressed. <code>on-cancel="cancelFn()"</code></li>
+				<li><strong>on-save:</strong> Function passed in is called when the date is saved via the OK button, date value is available as $value. <code>on-save="saveFn($value)"</code></li>
+				<li><strong>default-mode:</strong> A string of value 'date'/'time', which side of the slider that should be shown initially, overridden by display-mode. Default value is set via the <code>scDateTimeConfig.defaultMode</code> property.</li>
+				<li><strong>default-date:</strong> A date-time string that the selects the date should the model be null. Defaults to today (new Date()). Default can be overridden globally via <code>scDateTimeConfig.defaultDate</code> property.</li>
+				<li><strong>display-mode:</strong> Options are "full"; display time and date selectors and no display, "time"; show only the time input, "date"; show only the date input. Default value is set via the <code>scDateTimeConfig.displayMode</code> property.</li>
+				<li><strong>orientation:</strong> If this string value is 'true' then the picker will be in vertical mode. Otherwise it will change to vertical mode if the screen width is less than 51rem as that is the size of the editor. Default value is set via the <code>scDateTimeConfig.defaultOrientation</code> property.</li>
+				<li><strong>display-twentyfour:</strong> If this value is truthy then display 24 hours in time, else use 12 hour time. Default value is set via the <code>scDateTimeConfig.displayTwentyfour</code> property.</li>
+				<li><strong>compact:</strong> If this string value is 'true' then the picker will be in a compact mode, this hides the large title display to the left. Note that display-mode="full" ignores this setting. Default value is set via the <code>scDateTimeConfig.compact</code> property.</li>
+				<li><strong>mindate:</strong> A date string that represents the minimum selectable date/time</li>
+				<li><strong>maxdate:</strong> A date string that represents the maximum selectable date/time</li>
+				<li><strong>weekdays:</strong> Optionally bind an array of strings, this defaults to the englist S, M, T, W etc. Intended for full multilanguage support on directive level.</li>
+			</ul>
+			<h3><a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config</h3>
+			<p>The following options are available to be set at a global level, they correspond to and override the above attributes.</p>
+			<div class="highlight highlight-source-js"><pre>.<span class="pl-c1">value</span>(<span class="pl-s"><span class="pl-pds">'</span>scDateTimeConfig<span class="pl-pds">'</span></span>, {
+    defaultTheme<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>material<span class="pl-pds">'</span></span>,
+    autosave<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    defaultMode<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>date<span class="pl-pds">'</span></span>,
+    defaultDate<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">//should be date object!!</span>
+    displayMode<span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
+    defaultOrientation<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    displayTwentyfour<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    compact<span class="pl-k">:</span> <span class="pl-c1">false</span>
+})</pre></div>
+			<h3><a id="templates" class="anchor" href="#templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Templates</h3>
+			<p>By default two templates are bundled with scDateTime and correspond to the themes bootstrap and material.</p>
+			<p>If you want to create or modify the template to suit your application you need to add the html template to the $templateCache with a name following the following syntax; <code>scDateTime-{{theme name}}.tpl</code>. The bundled theme templates can be seen in the <a href="https://github.com/SimeonC/sc-date-time/tree/master/dist">dist folder of the repo</a>.</p>
+			<h3><a id="i18n" class="anchor" href="#i18n" aria-hidden="true"><span class="octicon octicon-link"></span></a>internationalisation</h3>
+			<p>There are 2 steps to change the language used on the date-time picker.</p>
+			<p>The first is to change the angular Locale by including correct i18n file, eg http://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.15/angular-locale_ko-kr.js</p>
+			<p>The second is overriding the default values in the <code>scDateTimeI18n</code> config value. The default values are below.</p>
+			<div class="highlight highlight-source-js"><pre>angular.module(<span class="pl-s"><span class="pl-pds">'</span>testMod<span class="pl-pds">'</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>scDateTime<span class="pl-pds">'</span></span>]).<span class="pl-c1">value</span>(<span class="pl-s"><span class="pl-pds">'</span>scDateTimeI18n<span class="pl-pds">'</span></span>, {
+    previousMonth<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Previous Month<span class="pl-pds">"</span></span>,
+    nextMonth<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Next Month<span class="pl-pds">"</span></span>,
+    incrementHours<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Increment Hours<span class="pl-pds">"</span></span>,
+    decrementHours<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Decrement Hours<span class="pl-pds">"</span></span>,
+    incrementMinutes<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Increment Minutes<span class="pl-pds">"</span></span>,
+    decrementMinutes<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Decrement Minutes<span class="pl-pds">"</span></span>,
+    switchAmPm<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Switch AM/PM<span class="pl-pds">"</span></span>,
+    now<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Now<span class="pl-pds">"</span></span>,
+    cancel<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Cancel<span class="pl-pds">"</span></span>,
+    save<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Save<span class="pl-pds">"</span></span>,
+    weekdays<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>S<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>M<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>T<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>W<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>T<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>F<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>S<span class="pl-pds">'</span></span>],
+    switchTo<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Switch to<span class="pl-pds">'</span></span>,
+    clock<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Clock<span class="pl-pds">'</span></span>,
+    calendar<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Calendar<span class="pl-pds">'</span></span>
+});</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/SimeonC/sc-date-time/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/SimeonC/sc-date-time/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/SimeonC/sc-date-time"></a> is maintained by <a href="https://github.com/SimeonC">SimeonC</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

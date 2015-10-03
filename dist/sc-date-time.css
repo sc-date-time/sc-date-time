@@ -2,7 +2,7 @@
 	@license sc-date-time
 	@author SimeonC
 	@license 2015 MIT
-	@version 0.1.0
+	@version 1.1.2
 	
 	See README.md for requirements and use.
 *//* Start Variable Declaration */
@@ -26,18 +26,26 @@
   font-weight: inherit;
   font-size: inherit;
 }
+.time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell {
+  line-height: 2.3rem;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell:hover {
+  text-decoration: none;
+}
 .time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell.today {
   position: relative;
 }
 .time-date[theme=bootstrap] > .control > .slider > .date-control > .days > .day-cell.today::after {
   content: " ";
   position: absolute;
-  bottom: 3px;
-  right: 3px;
+  bottom: 0.2rem;
+  right: 0.2rem;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 0 0.6rem 0.6rem;
+  border-width: 0 0 0.5rem 0.5rem;
   border-color: transparent transparent currentColor transparent;
 }
 .time-date[theme=material] .md-button,
@@ -182,8 +190,9 @@
   width: 2.5rem;
   height: 2.5rem;
   margin: 0.1rem;
-  padding: 0rem 6px;
+  padding: 0;
   cursor: pointer;
+  font-size: 1.3rem;
 }
 .time-date > .control > .slider > .date-control > .days {
   font-size: 1rem;
@@ -347,6 +356,19 @@
 .time-date.full-mode > .buttons > button {
 /* Invert colours for bottom bar */
   color: #fff !important;
+}
+.time-date:not(.full-mode).compact {
+  width: 22.8rem;
+}
+.time-date:not(.full-mode).compact > .display {
+  display: none;
+}
+.time-date:not(.full-mode).compact > .control {
+  width: 100%;
+  height: 23.2rem;
+}
+.time-date:not(.full-mode).compact > .control > .full-title {
+  display: block;
 }
 .time-date.vertical {
   width: 23.1rem;

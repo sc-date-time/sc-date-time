@@ -477,6 +477,53 @@ header h2 {
   letter-spacing: 0;
 }
 
+header nav {
+	margin-top: 12px;
+}
+
+header nav:after{
+	clear: both;
+	content: ' ';
+}
+
+header nav span {
+	display: block;
+	float: left;
+}
+
+header nav span a {
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    color: #2879d0;
+    text-align: center;
+    background-color: #9ddcff;
+    background-image: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+header nav span a.active {
+	color: #9ddcff;
+	background-color: #2879d0;
+	border: 1px solid #9ddcff;
+}
+
+header nav span + span:before {
+	font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	color: #FFF !important;
+	font-size: 29px;
+	text-indent: 4px;
+	display: block;
+	float: left;
+	padding: 0 13px;
+	content: "|";
+	color: #9ddcff;
+	margin-top: -7px;
+}
+
 .inner {
   position: relative;
   width: 940px;
