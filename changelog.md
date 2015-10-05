@@ -1,3 +1,17 @@
+### 1.1.3 (2015-10-06)
+
+
+#### Bug Fixes
+
+* **autosave:** Fix autosaving the default value over a undefined or null value ([dfe2ba80](git://github.com/simeonc/sc-date-time.git/commit/dfe2ba80d132576d1a345e9d276812d8e2241cb6))
+
+
+#### Features
+
+* **dist:** Add formatted templates to the dist directory ([867e4e35](git://github.com/simeonc/sc-date-time.git/commit/867e4e3581ccf75ecddb805a1e1779f4ee6c20b1))
+* **inputs:** Select contents of input when focussed ([4cf1fcb4](git://github.com/simeonc/sc-date-time.git/commit/4cf1fcb4cb839585a76e110e529b8ce490a4482f))
+
+
 ### 1.1.2 (2015-09-17)
 
 
