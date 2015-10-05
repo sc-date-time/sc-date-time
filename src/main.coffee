@@ -63,7 +63,7 @@ angular.module('scDateTime', [])
 			if not value? or not angular.isArray value
 				scope._weekdays = scDateTimeI18n.weekdays
 
-		ngModel.$render = -> scope.setDate ngModel.$modelValue or scope._defaultDate
+		ngModel.$render = -> scope.setDate ngModel.$modelValue ? scope._defaultDate, ngModel.$modelValue?
 
 		# Select contents of inputs when foccussed into
 		angular.forEach element.find('input'),
@@ -73,11 +73,12 @@ angular.module('scDateTime', [])
 
 		scope.autosave = false
 		if attrs['autosave']? or scDateTimeConfig.autosave
-			scope.$watch 'date', ngModel.$setViewValue
+			scope.saveUpdateDate = () -> ngModel.$setViewValue scope.date
 			scope.autosave = true
 		else
 			saveFn = $parse attrs.onSave
 			cancelFn = $parse attrs.onCancel
+			scope.saveUpdateDate = () -> true
 
 			scope.save = ->
 				ngModel.$setViewValue new Date scope.date
@@ -96,13 +97,14 @@ angular.module('scDateTime', [])
 		scope.restrictions =
 			mindate: undefined
 			maxdate: undefined
-		scope.setDate = (newVal) ->
+		scope.setDate = (newVal, save=true) ->
 			scope.date = if newVal then new Date newVal else new Date()
 			scope.calendar._year = scope.date.getFullYear()
 			scope.calendar._month = scope.date.getMonth()
 			scope.clock._minutes = scope.date.getMinutes()
 			scope.clock._hours = if scope._hours24 then scope.date.getHours() else scope.date.getHours() % 12
 			if not scope._hours24 and scope.clock._hours is 0 then scope.clock._hours = 12
+			scope.calendar.yearChange save
 		scope.display =
 			fullTitle: ->
 				if scope._displayMode is 'full' and not scope._verticalMode then _dateFilter scope.date, 'EEEE d MMMM yyyy, h:mm a'
@@ -149,8 +151,10 @@ angular.module('scDateTime', [])
 					classString += " today"
 				classString
 # coffeelint: enable=max_line_length
-			select: (d) -> scope.date.setFullYear @_year, @_month, d
-			monthChange: ->
+			select: (d) ->
+				scope.date.setFullYear @_year, @_month, d
+				scope.saveUpdateDate()
+			monthChange: (save=true) ->
 				if not @_year? or isNaN @_year then @_year = new Date().getFullYear()
 				mindate = scope.restrictions.mindate
 				maxdate = scope.restrictions.maxdate
@@ -166,6 +170,7 @@ angular.module('scDateTime', [])
 				if maxdate? and scope.date > maxdate
 					scope.date.setDate maxdate.getTime()
 					scope.calendar.select maxdate.getDate()
+				if save then scope.saveUpdateDate()
 			_incMonth: (months) ->
 				@_month += months
 				while @_month < 0 or @_month > 11
@@ -176,6 +181,14 @@ angular.module('scDateTime', [])
 						@_month -= 12
 						@_year++
 				@monthChange()
+			yearChange: (save=true) ->
+				if not scope.calendar._year? or scope.calendar._year is '' then return
+				mindate = scope.restrictions.mindate
+				maxdate = scope.restrictions.maxdate
+				i = if mindate? and mindate.getFullYear() is scope.calendar._year then mindate.getMonth() else 0
+				len = if maxdate? and maxdate.getFullYear() is scope.calendar._year then maxdate.getMonth() else 11
+				scope.calendar._months = scope.calendar._allMonths.slice i, len + 1
+				scope.calendar.monthChange save
 		scope.clock =
 			_minutes: 0
 			_hours: 0
@@ -192,26 +205,25 @@ angular.module('scDateTime', [])
 					scope.date.setHours(scope.date.getHours() - 12)
 				else if not b and @isAM()
 					scope.date.setHours(scope.date.getHours() + 12)
+				scope.saveUpdateDate()
 			isAM: -> scope.date.getHours() < 12
 		scope.$watch 'clock._minutes', (val, oldVal) ->
-			if val? and val isnt scope.date.getMinutes() and not isNaN(val) and 0 <= val <= 59 then scope.date.setMinutes val
+			if val? and val isnt scope.date.getMinutes() and not isNaN(val) and 0 <= val <= 59
+				scope.date.setMinutes val
+				scope.saveUpdateDate()
 		scope.$watch 'clock._hours', (val) ->
 			if val? and not isNaN(val)
 				if not scope._hours24
 					if val is 24 then val = 12
 					else if val is 12 then val = 0
 					else if not scope.clock.isAM() then val += 12
-				if val isnt scope.date.getHours() then scope.date.setHours val
-		scope.$watch 'calendar._year', (val) ->
-			if not val? or val is '' then return
-			mindate = scope.restrictions.mindate
-			maxdate = scope.restrictions.maxdate
-			i = if mindate? and mindate.getFullYear() is scope.calendar._year then mindate.getMonth() else 0
-			len = if maxdate? and maxdate.getFullYear() is scope.calendar._year then maxdate.getMonth() else 11
-			scope.calendar._months = scope.calendar._allMonths.slice i, len + 1
-			scope.calendar.monthChange()
+				if val isnt scope.date.getHours()
+					scope.date.setHours val
+					scope.saveUpdateDate()
 
-		scope.setNow = -> scope.setDate()
+		scope.setNow = ->
+			scope.setDate()
+			scope.saveUpdateDate()
 		scope.modeClass = ->
 			if scope._displayMode? then scope._mode = scope._displayMode
 			"#{if scope._verticalMode then 'vertical ' else ''}#{
