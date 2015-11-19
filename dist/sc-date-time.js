@@ -133,7 +133,7 @@
           scope._displayMode = scDateTimeConfig.displayMode;
           scope._verticalMode = scDateTimeConfig.defaultOrientation;
           scope._hours24 = scDateTimeConfig.displayTwentyfour;
-					scope._timeFormat = scope._hours24 ? 'h:mm a' : 'H:mm';
+					scope._timeFormat = scope._hours24 ? 'H:mm' : 'h:mm a';
           scope._compact = scDateTimeConfig.compact;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
@@ -168,7 +168,7 @@
             },
             title: function() {
               if (scope._mode === 'date') {
-                return _dateFilter(scope.date, ('EEEE' + (scope._displayMode !== 'date' ? scope._timeFormat : '') );
+                return _dateFilter(scope.date, 'EEEE' + (scope._displayMode !== 'date' ? scope._timeFormat : '') );
               } else {
                 return _dateFilter(scope.date, 'MMMM d yyyy');
               }
