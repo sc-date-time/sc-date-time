@@ -3,7 +3,7 @@
 	@author SimeonC
 	@license 2015 MIT
 	@version 1.1.3
-	
+
 	See README.md for requirements and use.
 */angular.module('scDateTime', []).value('scDateTimeConfig', {
   defaultTheme: 'material',
@@ -133,6 +133,7 @@
           scope._displayMode = scDateTimeConfig.displayMode;
           scope._verticalMode = scDateTimeConfig.defaultOrientation;
           scope._hours24 = scDateTimeConfig.displayTwentyfour;
+          scope._timeFormat = scope._hours24 ? 'H:mm' : 'h:mm a';
           scope._compact = scDateTimeConfig.compact;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
@@ -156,18 +157,18 @@
           scope.display = {
             fullTitle: function() {
               if (scope._displayMode === 'full' && !scope._verticalMode) {
-                return _dateFilter(scope.date, 'EEEE d MMMM yyyy, h:mm a');
+                return _dateFilter(scope.date, 'EEEE d MMMM yyyy, ' + scope._timeFormat);
               } else if (scope._displayMode === 'time') {
-                return _dateFilter(scope.date, 'h:mm a');
+                return _dateFilter(scope.date, scope._timeFormat);
               } else if (scope._displayMode === 'date') {
                 return _dateFilter(scope.date, 'EEE d MMM yyyy');
               } else {
-                return _dateFilter(scope.date, 'd MMM yyyy, h:mm a');
+                return _dateFilter(scope.date, 'd MMM yyyy, ' + scope._timeFormat);
               }
             },
             title: function() {
               if (scope._mode === 'date') {
-                return _dateFilter(scope.date, (scope._displayMode === 'date' ? 'EEEE' : 'EEEE h:mm a'));
+                return _dateFilter(scope.date, 'EEEE' + (scope._displayMode !== 'date' ? scope._timeFormat : '') );
               } else {
                 return _dateFilter(scope.date, 'MMMM d yyyy');
               }
