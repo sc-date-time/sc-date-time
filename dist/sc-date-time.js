@@ -133,7 +133,7 @@
           scope._displayMode = scDateTimeConfig.displayMode;
           scope._verticalMode = scDateTimeConfig.defaultOrientation;
           scope._hours24 = scDateTimeConfig.displayTwentyfour;
-					scope._timeFormat = scope._hours24 ? 'H:mm' : 'h:mm a';
+          scope._timeFormat = scope._hours24 ? 'H:mm' : 'h:mm a';
           scope._compact = scDateTimeConfig.compact;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
