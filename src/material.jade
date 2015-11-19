@@ -11,12 +11,12 @@
 			.date-control
 				.title
 					md-button(ng-click="calendar._incMonth(-1)" aria-label="{{:: translations.previousMonth}}" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}")
-						i.fa.fa-caret-left
+						i.material-icons chevron_left
 					span.month-part {{date | date:'MMMM'}}
 						select(ng-model="calendar._month" ng-change="calendar.monthChange()" ng-options="calendar._allMonths.indexOf(month) as month for month in calendar._months")
 					input.year-part(ng-model="calendar._year" ng-change="calendar.yearChange()" type="number" min="{{restrictions.mindate ? restrictions.mindate.getFullYear() : 0}}" max="{{restrcitions.maxdate ? restrictions.maxdate.getFullYear() : NaN}}")
 					md-button(ng-click="calendar._incMonth(1)" aria-label="{{:: translations.nextMonth}}" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}")
-						i.fa.fa-caret-right
+						i.material-icons chevron_right
 				.headers
 					.day-cell(ng-repeat="day in _weekdays track by $index") {{day}}
 				.days
@@ -26,21 +26,21 @@
 						else
 							md-button.day-cell(ng-class= "calendar.class("+day+")" ng-show="calendar.isVisible("+day+")" ng-disabled="calendar.isDisabled("+day+")" ng-click="calendar.select("+day+")" aria-label=day)= day
 			md-button.switch-control(ng-click="modeSwitch()" aria-label="{{modeSwitchText()}}")
-				i.fa.fa-clock-o
-				i.fa.fa-calendar
+				i.material-icons access_time
+				i.material-icons date_range
 				span.visuallyhidden {{modeSwitchText()}}
 			.time-control
 				.time-inputs
 					input(type="number" min="{{_hours24 ? 0 : 1}}" max="{{_hours24 ? 23 : 12}}" ng-model="clock._hours")
 					md-button.hours.up(ng-click="clock._incHours(1)" aria-label="{{:: translations.incrementHours}}")
-						i.fa.fa-caret-up
+						i.material-icons expand_less
 					md-button.hours.down(ng-click="clock._incHours(-1)" aria-label="{{:: translations.decrementHours}}")
-						i.fa.fa-caret-down
+						i.material-icons expand_more
 					input(type="number" min="0" max="59" ng-model="clock._minutes")
 					md-button.minutes.up(ng-click="clock._incMinutes(1)" aria-label="{{:: translations.incrementMinutes}}")
-						i.fa.fa-caret-up
+						i.material-icons expand_less
 					md-button.minutes.down(ng-click="clock._incMinutes(-1)" aria-label="{{:: translations.decrementMinutes}}")
-						i.fa.fa-caret-down
+						i.material-icons expand_more
 				.buttons(ng-if="!_hours24")
 					md-button(ng-click="clock.setAM()" aria-label="{{:: translations.switchAmPm}}") {{date | date:'a'}}
 	.buttons

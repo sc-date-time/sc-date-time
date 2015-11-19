@@ -5,12 +5,10 @@ scDateTime (formerly mdDateTime)
 ## Requirements
 
 1. `AngularJS` ≥ `1.2.x`
-2. `FontAwesome` ≥ `4.2.x`
 
 ### Optional Recommended Requirements
 
 1. [Angular-Material](https://github.com/angular/material)
-2. [Bootstrap](http://getbootstrap.com) (Note with bootstrap <= v3 a default font-size of 16px is recommended as all sizes are set via rem)
 
 ## Where to get it
 

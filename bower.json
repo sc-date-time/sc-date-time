@@ -19,8 +19,7 @@
     "package.json"
   ],
   "dependencies": {
-    "angular": "^1.2.x",
-    "font-awesome": "^4.2.0"
+    "angular": "^1.2.x"
   },
   "license": "MIT",
   "homepage": "http://simeonc.github.io/sc-date-time"

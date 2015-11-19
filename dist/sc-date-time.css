@@ -132,10 +132,10 @@
   cursor: pointer;
   padding: 0 0.6rem;
 }
-.time-date > .control > .slider > .switch-control > i.fa:first-child {
+.time-date > .control > .slider > .switch-control > i.material-icons:first-child {
   margin-right: 1.4rem;
 }
-.time-date > .control > .slider > .switch-control > i.fa:last-child {
+.time-date > .control > .slider > .switch-control > i.material-icons:last-child {
   margin-left: 1.4rem;
 }
 .time-date > .control > .slider > .date-control > .title {
