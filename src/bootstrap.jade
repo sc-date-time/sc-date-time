@@ -10,12 +10,12 @@
 		.slider 
 			.date-control
 				.title
-					button.btn.btn-link(ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}")
+					button.btn.btn-link(type="button" ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}")
 						i.fa.fa-caret-left
 					span.month-part {{date | date:'MMMM'}}
 						select(ng-model="calendar._month" ng-change="calendar.monthChange()" ng-options="calendar._allMonths.indexOf(month) as month for month in calendar._months")
 					input.year-part(ng-model="calendar._year" ng-change="calendar.yearChange()" type="number" min="{{restrictions.mindate ? restrictions.mindate.getFullYear() : 0}}" max="{{restrcitions.maxdate ? restrictions.maxdate.getFullYear() : NaN}}")
-					button.btn.btn-link(ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}")
+					button.btn.btn-link(type="button" ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}")
 						i.fa.fa-caret-right
 				.headers
 					.day-cell(ng-repeat="day in _weekdays track by $index") {{day}}
@@ -25,25 +25,25 @@
 							button.btn.btn-link.day-cell(type="button" ng-style="{'margin-left': calendar.offsetMargin()}" ng-class= "calendar.class("+day+")" ng-disabled="calendar.isDisabled("+day+")" ng-show="calendar.isVisible("+day+")" ng-click="calendar.select("+day+")")= day
 						else
 							button.btn.btn-link.day-cell(type="button" ng-class= "calendar.class("+day+")" ng-show="calendar.isVisible("+day+")" ng-disabled="calendar.isDisabled("+day+")" ng-click="calendar.select("+day+")")= day
-			button.btn.btn-link.switch-control(ng-click="modeSwitch()" )
+			button.btn.btn-link.switch-control(type="button" ng-click="modeSwitch()")
 				i.fa.fa-clock-o
 				i.fa.fa-calendar
 				span.visuallyhidden {{modeSwitchText()}}
 			.time-control
 				.time-inputs
 					input(type="number" min="{{_hours24 ? 0 : 1}}" max="{{_hours24 ? 23 : 12}}" ng-model="clock._hours")
-					button.btn.btn-link.hours.up(ng-click="clock._incHours(1)" )
+					button.btn.btn-link.hours.up(type="button" ng-click="clock._incHours(1)")
 						i.fa.fa-caret-up
-					button.btn.btn-link.hours.down(ng-click="clock._incHours(-1)" )
+					button.btn.btn-link.hours.down(type="button" ng-click="clock._incHours(-1)")
 						i.fa.fa-caret-down
 					input(type="number" min="0" max="59" ng-model="clock._minutes")
-					button.btn.btn-link.minutes.up(ng-click="clock._incMinutes(1)" )
+					button.btn.btn-link.minutes.up(type="button" ng-click="clock._incMinutes(1)")
 						i.fa.fa-caret-up
-					button.btn.btn-link.minutes.down(ng-click="clock._incMinutes(-1)" )
+					button.btn.btn-link.minutes.down(type="button" ng-click="clock._incMinutes(-1)")
 						i.fa.fa-caret-down
 				.buttons(ng-if="!_hours24")
-					button.btn.btn-link(ng-click="clock.setAM()" ) {{date | date:'a'}}
+					button.btn.btn-link(type="button" ng-click="clock.setAM()") {{date | date:'a'}}
 	.buttons
-		button.btn.btn-link(ng-click="setNow()" ) {{:: translations.now}}
-		button.btn.btn-link(ng-click="cancel()" ng-if="!autosave" ) {{:: translations.cancel}}
-		button.btn.btn-link(ng-click="save()" ng-if="!autosave" ) {{:: translations.save}}
+		button.btn.btn-link(type="button" ng-click="setNow()" ) {{:: translations.now}}
+		button.btn.btn-link(type="button" ng-click="cancel()" ng-if="!autosave" ) {{:: translations.cancel}}
+		button.btn.btn-link(type="button" ng-click="save()" ng-if="!autosave" ) {{:: translations.save}}
