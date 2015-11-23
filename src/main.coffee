@@ -33,7 +33,7 @@ angular.module('scDateTime', [])
 	require: 'ngModel'
 	templateUrl: (tElement, tAttrs) ->
 		if not tAttrs.theme? or tAttrs.theme is '' then tAttrs.theme = scDateTimeConfig.defaultTheme
-		return "scDateTime-#{tAttrs.theme}.tpl"
+		return if tAttrs.theme.indexOf('/') <= 0 then "scDateTime-#{tAttrs.theme}.tpl" else tAttrs.theme
 	link: (scope, element, attrs, ngModel) ->
 		attrs.$observe 'defaultMode', (val) ->
 			if val isnt 'time' and val isnt 'date' then val = scDateTimeConfig.defaultMode
