@@ -1,3 +1,17 @@
+### 1.1.4 (2015-11-30)
+
+
+#### Bug Fixes
+
+* **button:** add button type to all buttons ([1571248f](git://github.com/simeonc/sc-date-time.git/commit/1571248fdf6eaf418a92f013c43c237b3f9de312), closes [#15](git://github.com/simeonc/sc-date-time.git/issues/15))
+* **timeDisplay:** When in 24 hour mode should show all times as 24hr ([363196ee](git://github.com/simeonc/sc-date-time.git/commit/363196ee55db97439b4b02b30649ecac68cfc192), closes [#25](git://github.com/simeonc/sc-date-time.git/issues/25))
+
+
+#### Features
+
+* **templateUrl:** Support theme template by url ([3045eaf2](git://github.com/simeonc/sc-date-time.git/commit/3045eaf2abab3706b35eb139c5e3d07421dec31f), closes [#24](git://github.com/simeonc/sc-date-time.git/issues/24))
+
+
 ### 1.1.3 (2015-10-06)
 
 

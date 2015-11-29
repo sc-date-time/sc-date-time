@@ -13,10 +13,10 @@
     <div class="slider"> 
       <div class="date-control">
         <div class="title">
-          <button ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}" class="btn btn-link"><i class="fa fa-caret-left"></i></button><span class="month-part">{{date | date:'MMMM'}}
+          <button type="button" ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}" class="btn btn-link"><i class="fa fa-caret-left"></i></button><span class="month-part">{{date | date:'MMMM'}}
             <select ng-model="calendar._month" ng-change="calendar.monthChange()" ng-options="calendar._allMonths.indexOf(month) as month for month in calendar._months"></select></span>
           <input ng-model="calendar._year" ng-change="calendar.yearChange()" type="number" min="{{restrictions.mindate ? restrictions.mindate.getFullYear() : 0}}" max="{{restrcitions.maxdate ? restrictions.maxdate.getFullYear() : NaN}}" class="year-part"/>
-          <button ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}" class="btn btn-link"><i class="fa fa-caret-right"></i></button>
+          <button type="button" ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}" class="btn btn-link"><i class="fa fa-caret-right"></i></button>
         </div>
         <div class="headers">
           <div ng-repeat="day in _weekdays track by $index" class="day-cell">{{day}}</div>
@@ -55,25 +55,25 @@
           <button type="button" ng-class="calendar.class(31)" ng-show="calendar.isVisible(31)" ng-disabled="calendar.isDisabled(31)" ng-click="calendar.select(31)" class="btn btn-link day-cell">31</button>
         </div>
       </div>
-      <button ng-click="modeSwitch()" class="btn btn-link switch-control"><i class="fa fa-clock-o"></i><i class="fa fa-calendar"></i><span class="visuallyhidden">{{modeSwitchText()}}</span></button>
+      <button type="button" ng-click="modeSwitch()" class="btn btn-link switch-control"><i class="fa fa-clock-o"></i><i class="fa fa-calendar"></i><span class="visuallyhidden">{{modeSwitchText()}}</span></button>
       <div class="time-control">
         <div class="time-inputs">
           <input type="number" min="{{_hours24 ? 0 : 1}}" max="{{_hours24 ? 23 : 12}}" ng-model="clock._hours"/>
-          <button ng-click="clock._incHours(1)" class="btn btn-link hours up"><i class="fa fa-caret-up"></i></button>
-          <button ng-click="clock._incHours(-1)" class="btn btn-link hours down"><i class="fa fa-caret-down"></i></button>
+          <button type="button" ng-click="clock._incHours(1)" class="btn btn-link hours up"><i class="fa fa-caret-up"></i></button>
+          <button type="button" ng-click="clock._incHours(-1)" class="btn btn-link hours down"><i class="fa fa-caret-down"></i></button>
           <input type="number" min="0" max="59" ng-model="clock._minutes"/>
-          <button ng-click="clock._incMinutes(1)" class="btn btn-link minutes up"><i class="fa fa-caret-up"></i></button>
-          <button ng-click="clock._incMinutes(-1)" class="btn btn-link minutes down"><i class="fa fa-caret-down"></i></button>
+          <button type="button" ng-click="clock._incMinutes(1)" class="btn btn-link minutes up"><i class="fa fa-caret-up"></i></button>
+          <button type="button" ng-click="clock._incMinutes(-1)" class="btn btn-link minutes down"><i class="fa fa-caret-down"></i></button>
         </div>
         <div ng-if="!_hours24" class="buttons">
-          <button ng-click="clock.setAM()" class="btn btn-link">{{date | date:'a'}}</button>
+          <button type="button" ng-click="clock.setAM()" class="btn btn-link">{{date | date:'a'}}</button>
         </div>
       </div>
     </div>
   </div>
   <div class="buttons">
-    <button ng-click="setNow()" class="btn btn-link">{{:: translations.now}}</button>
-    <button ng-click="cancel()" ng-if="!autosave" class="btn btn-link">{{:: translations.cancel}}</button>
-    <button ng-click="save()" ng-if="!autosave" class="btn btn-link">{{:: translations.save}}</button>
+    <button type="button" ng-click="setNow()" class="btn btn-link">{{:: translations.now}}</button>
+    <button type="button" ng-click="cancel()" ng-if="!autosave" class="btn btn-link">{{:: translations.cancel}}</button>
+    <button type="button" ng-click="save()" ng-if="!autosave" class="btn btn-link">{{:: translations.save}}</button>
   </div>
 </div>
