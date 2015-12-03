@@ -2,7 +2,7 @@
 	@license sc-date-time
 	@author SimeonC
 	@license 2015 MIT
-	@version 1.1.4
+	@version 1.1.6
 	
 	See README.md for requirements and use.
 *//* Start Variable Declaration */
@@ -52,6 +52,7 @@
 .time-date:not([theme]) .md-button {
   padding: 6px;
   margin: 0;
+  min-width: auto;
   min-width: initial;
   line-height: inherit;
   font-size: inherit;
@@ -261,7 +262,7 @@
 .time-date > .control > .slider > .time-control > .time-inputs > input {
   border: none;
   border-bottom: 1px solid #000;
-  text-align: right;
+  text-align: center;
   font-size: 6.1rem;
   line-height: 3rem;
   width: 8.4rem;

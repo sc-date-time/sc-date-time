@@ -13,10 +13,10 @@
     <div class="slider"> 
       <div class="date-control">
         <div class="title">
-          <button type="button" ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('mindate')}" class="btn btn-link"><i class="fa fa-caret-left"></i></button><span class="month-part">{{date | date:'MMMM'}}
+          <button type="button" ng-click="calendar._incMonth(-1)" style="float: left;" ng-class="{'visuallyhidden': calendar.isPrevMonthButtonHidden()}" class="btn btn-link"><i class="fa fa-caret-left"></i></button><span class="month-part">{{date | date:'MMMM'}}
             <select ng-model="calendar._month" ng-change="calendar.monthChange()" ng-options="calendar._allMonths.indexOf(month) as month for month in calendar._months"></select></span>
           <input ng-model="calendar._year" ng-change="calendar.yearChange()" type="number" min="{{restrictions.mindate ? restrictions.mindate.getFullYear() : 0}}" max="{{restrcitions.maxdate ? restrictions.maxdate.getFullYear() : NaN}}" class="year-part"/>
-          <button type="button" ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isVisibleMonthButton('maxdate')}" class="btn btn-link"><i class="fa fa-caret-right"></i></button>
+          <button type="button" ng-click="calendar._incMonth(1)" style="float: right;" ng-class="{'visuallyhidden': calendar.isNextMonthButtonHidden()}" class="btn btn-link"><i class="fa fa-caret-right"></i></button>
         </div>
         <div class="headers">
           <div ng-repeat="day in _weekdays track by $index" class="day-cell">{{day}}</div>
