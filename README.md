@@ -42,7 +42,7 @@ Download the code from [https://github.com/simeonc/sc-date-time/releases/latest]
 
 ## Options
 
-* **theme:** String representing one of the supported themes, default value is set via the `scDateTimeConfig.defaultTheme` property.
+* **theme:** String representing one of the supported themes, default value is set via the `scDateTimeConfig.defaultTheme` property. This could also be a template cache value (or url) - if the path contains a `/`.
 * **autosave:** If this attribute is present the cancel and save buttons are removed and their respective events do not fire. The model is updated as the picker changes. Default value is set via the `scDateTimeConfig.autosave` property.
 * **on-cancel:** Function passed in is called if the cancel button is pressed. `on-cancel="cancelFn()"`
 * **on-save:** Function passed in is called when the date is saved via the OK button, date value is available as $value. `on-save="saveFn($value)"`
