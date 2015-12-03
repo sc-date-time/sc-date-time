@@ -145,13 +145,11 @@ angular.module('scDateTime', [])
 				maxdate = scope.restrictions.maxdate
 				(mindate? and currentDate < mindate) or (maxdate? and currentDate > maxdate)
 			isPrevMonthButtonHidden: () ->
-                date = scope.restrictions["mindate"]
-                date? and @_month <= date.getMonth() and @_year <= date.getFullYear()
-            },
-            isNextMonthButtonHidden: () ->
-                date = scope.restrictions["maxdate"]
-                date? and @_month >= date.getMonth() and @_year >= date.getFullYear()
-            },            
+				date = scope.restrictions["mindate"]
+				date? and @_month <= date.getMonth() and @_year <= date.getFullYear()
+			isNextMonthButtonHidden: () ->
+				date = scope.restrictions["maxdate"]
+				date? and @_month >= date.getMonth() and @_year >= date.getFullYear()
 			class: (d) ->
 				classString = ''
 				# coffeelint: disable=max_line_length
