@@ -52,7 +52,9 @@
       },
       link: function(scope, element, attrs, ngModel) {
         var cancelFn, saveFn;
-        attrs.$observe('defaultMode', function(val) {
+          parseMindate(attrs.mindate);
+          parseMaxdate(attrs.maxdate);
+          attrs.$observe('defaultMode', function(val) {
           if (val !== 'time' && val !== 'date') {
             val = scDateTimeConfig.defaultMode;
           }
@@ -76,18 +78,20 @@
         attrs.$observe('displayTwentyfour', function(val) {
           return scope._hours24 = val != null ? val : scDateTimeConfig.displayTwentyfour;
         });
-        attrs.$observe('mindate', function(val) {
-          if ((val != null) && Date.parse(val)) {
-            scope.restrictions.mindate = new Date(val);
-            return scope.restrictions.mindate.setHours(0, 0, 0, 0);
-          }
-        });
-        attrs.$observe('maxdate', function(val) {
-          if ((val != null) && Date.parse(val)) {
-            scope.restrictions.maxdate = new Date(val);
-            return scope.restrictions.maxdate.setHours(23, 59, 59, 999);
-          }
-        });
+        attrs.$observe('mindate', parseMindate);
+        function parseMindate(val) {
+            if ((val != null) && Date.parse(val)) {
+              scope.restrictions.mindate = new Date(val);
+              return scope.restrictions.mindate.setHours(0, 0, 0, 0);
+            }
+        };
+        attrs.$observe('maxdate', parseMaxdate);
+        function parseMaxdate(val) {
+            if ((val != null) && Date.parse(val)) {
+                scope.restrictions.maxdate = new Date(val);
+                return scope.restrictions.maxdate.setHours(23, 59, 59, 999);
+            }
+        };
         scope._weekdays = scope._weekdays || scDateTimeI18n.weekdays;
         scope.$watch('_weekdays', function(value) {
           if ((value == null) || !angular.isArray(value)) {
