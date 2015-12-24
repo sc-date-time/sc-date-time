@@ -152,7 +152,7 @@
               save = true;
             }
             scope.date = newVal ? new Date(newVal) : new Date();
-            scope.calendar._year = scope.date.getFullYear();
+            scope.calendar._year = scope.restrictions.maxdate && scope.date.getFullYear() > scope.restrictions.maxdate.getFullYear() ? scope.restrictions.maxdate.getFullYear() : scope.date.getFullYear();
             scope.calendar._month = scope.date.getMonth();
             scope.clock._minutes = scope.date.getMinutes();
             scope.clock._hours = scope._hours24 ? scope.date.getHours() : scope.date.getHours() % 12;
@@ -271,11 +271,11 @@
                 scope.date.setDate(0);
               }
               if ((mindate != null) && scope.date < mindate) {
-                scope.date.setDate(mindate.getTime());
+                scope.date.setDate(mindate.getDate());
                 scope.calendar.select(mindate.getDate());
               }
               if ((maxdate != null) && scope.date > maxdate) {
-                scope.date.setDate(maxdate.getTime());
+                scope.date.setDate(maxdate.getDate());
                 scope.calendar.select(maxdate.getDate());
               }
               if (save) {
