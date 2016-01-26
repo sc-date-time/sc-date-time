@@ -321,9 +321,12 @@
             _minutes: 0,
             _hours: 0,
             _incHours: function(inc) {
-              this._hours = scope._hours24 ? Math.max(0, Math.min(23, this._hours + inc)) : Math.max(1, Math.min(12, this._hours + inc));
+              var i = this._hours + inc;
+              i = !scope._hours24 && i==13 ? 1 : i;
+              i = !scope._hours24 && i==0 ? 12 : i;
+              this._hours = scope._hours24 ? Math.max(0, Math.min(23, i)) : Math.max(1, Math.min(12, i));
               if (isNaN(this._hours)) {
-                return this._hours = 0;
+                return this._hours = 1;
               }
             },
             _incMinutes: function(inc) {
@@ -356,12 +359,36 @@
           scope.$watch('clock._hours', function(val) {
             if ((val != null) && !isNaN(val)) {
               if (!scope._hours24) {
-                if (val === 24) {
-                  val = 12;
-                } else if (val === 12) {
-                  val = 0;
-                } else if (!scope.clock.isAM()) {
-                  val += 12;
+                if (val === 12) {
+                    if (scope.date.getHours() == 11) {
+                        val = 12;
+                    }
+                    else if (scope.date.getHours() == 23) {
+                        val = 0;
+                    }
+                    else if (scope.date.getHours() == 13) {
+                        val = 12;
+                    }
+                    else if (scope.date.getHours() == 1) {
+                        val = 0;
+                    }
+                    else if (!scope.clock.isAM()) {
+                        val += 12;
+                    }
+                }
+                else if (val == 11){
+                    if(scope.date.getHours() == 0)
+                    {
+                        val = 23;
+                    }else if(scope.date.getHours() == 12){
+                        val = 11;
+                    }
+                    else if (!scope.clock.isAM()) {
+                        val += 12;
+                    }
+                }
+                else if (!scope.clock.isAM()) {
+                    val += 12;
                 }
               }
               if (val !== scope.date.getHours()) {
