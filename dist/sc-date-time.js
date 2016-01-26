@@ -76,7 +76,13 @@
           return scope._compact = val != null ? val === 'true' : scDateTimeConfig.compact;
         });
         attrs.$observe('displayTwentyfour', function(val) {
-          return scope._hours24 = val != null ? val : scDateTimeConfig.displayTwentyfour;
+          return scope._hours24 = val != null ? scope.$eval(val) : scDateTimeConfig.displayTwentyfour;
+        });
+        /* delcam fix */
+        attrs.$observe('config', function(val) {
+          scope.translations = JSON.parse(val);
+          scope._weekdays = JSON.parse(val).weekdays;
+          return true;
         });
         attrs.$observe('mindate', parseMindate);
         function parseMindate(val) {
@@ -134,13 +140,13 @@
         }
       },
       controller: [
-        '$scope', 'scDateTimeI18n', function(scope, scDateTimeI18n) {
+        '$scope', 'scDateTimeI18n', '$attrs', '$interpolate', function(scope, scDateTimeI18n, $attrs, $interpolate) {
           var i;
           scope._defaultDate = scDateTimeConfig.defaultDate;
           scope._mode = scDateTimeConfig.defaultMode;
           scope._displayMode = scDateTimeConfig.displayMode;
           scope._verticalMode = scDateTimeConfig.defaultOrientation;
-          scope._hours24 = scDateTimeConfig.displayTwentyfour;
+          scope._hours24 = $interpolate($attrs.displayTwentyfour)(scope.$parent) == 'true' || scDateTimeConfig.displayTwentyfour;
           scope._compact = scDateTimeConfig.compact;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
