@@ -211,7 +211,10 @@ angular.module('scDateTime', [])
 				else Math.max 1, Math.min 12, @_hours + inc
 				if isNaN @_hours then @_hours = 0
 			_incMinutes: (inc) ->
-				@_minutes = Math.max 0, Math.min 59, @_minutes + (scope._incMinutes * inc)
+				inc = inc * scope._incMinutes
+				@_minutes += Math.abs(inc + @_minutes % inc)  if @_minutes % inc != 0 && inc < 0
+				@_minutes -= @_minutes % inc if @_minutes % inc != 0 && inc > 0
+				@_minutes = Math.max 0, Math.min 59 - 59 % inc, @_minutes + inc
 				if isNaN @_minutes then @_minutes = 0
 			setAM: (b = not @isAM()) ->
 				if b and not @isAM()

@@ -322,7 +322,14 @@
               }
             },
             _incMinutes: function(inc) {
-              this._minutes = Math.max(0, Math.min(59, this._minutes + (scope._incMinutes * inc)));
+              inc = inc * scope._incMinutes;
+              if (this._minutes % inc !== 0 && inc < 0) {
+                this._minutes += Math.abs(inc + this._minutes % inc);
+              }
+              if (this._minutes % inc !== 0 && inc > 0) {
+                this._minutes -= this._minutes % inc;
+              }
+              this._minutes = Math.max(0, Math.min(59 - 59 % inc, this._minutes + inc));
               if (isNaN(this._minutes)) {
                 return this._minutes = 0;
               }
