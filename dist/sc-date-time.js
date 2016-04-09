@@ -13,7 +13,8 @@
   displayMode: void 0,
   defaultOrientation: false,
   displayTwentyfour: false,
-  compact: false
+  compact: false,
+  calendarIncMinutes: 1
 }).value('scDateTimeI18n', {
   previousMonth: "Previous Month",
   nextMonth: "Next Month",
@@ -75,6 +76,9 @@
         });
         attrs.$observe('displayTwentyfour', function(val) {
           return scope._hours24 = val != null ? val : scDateTimeConfig.displayTwentyfour;
+        });
+        attrs.$observe('calendarIncMinutes', function(val) {
+          return scope._incMinutes = val != null ? val : scDateTimeConfig.calendarIncMinutes;
         });
         attrs.$observe('mindate', function(val) {
           if ((val != null) && Date.parse(val)) {
@@ -138,6 +142,7 @@
           scope._verticalMode = scDateTimeConfig.defaultOrientation;
           scope._hours24 = scDateTimeConfig.displayTwentyfour;
           scope._compact = scDateTimeConfig.compact;
+          scope._incMinutes = scDateTimeConfig.calendarIncMinutes;
           scope.translations = scDateTimeI18n;
           scope.restrictions = {
             mindate: void 0,
@@ -317,7 +322,7 @@
               }
             },
             _incMinutes: function(inc) {
-              this._minutes = Math.max(0, Math.min(59, this._minutes + inc));
+              this._minutes = Math.max(0, Math.min(59, this._minutes + (scope._incMinutes * inc)));
               if (isNaN(this._minutes)) {
                 return this._minutes = 0;
               }

@@ -8,6 +8,7 @@ angular.module('scDateTime', [])
 	defaultOrientation: false
 	displayTwentyfour: false
 	compact: false
+	calendarIncMinutes: 1
 ).value('scDateTimeI18n',
 	previousMonth: "Previous Month"
 	nextMonth: "Next Month"
@@ -50,6 +51,8 @@ angular.module('scDateTime', [])
 			scope._compact = if val? then val is 'true' else scDateTimeConfig.compact
 		attrs.$observe 'displayTwentyfour', (val) ->
 			scope._hours24 = if val? then val else scDateTimeConfig.displayTwentyfour
+		attrs.$observe 'calendarIncMinutes', (val) ->
+			scope._incMinutes = if val? then val else scDateTimeConfig.calendarIncMinutes
 		attrs.$observe 'mindate', (val) ->
 			if val? and Date.parse val
 				scope.restrictions.mindate = new Date val
@@ -93,6 +96,7 @@ angular.module('scDateTime', [])
 		scope._verticalMode = scDateTimeConfig.defaultOrientation
 		scope._hours24 = scDateTimeConfig.displayTwentyfour
 		scope._compact = scDateTimeConfig.compact
+		scope._incMinutes = scDateTimeConfig.calendarIncMinutes
 		scope.translations = scDateTimeI18n
 		scope.restrictions =
 			mindate: undefined
@@ -207,7 +211,7 @@ angular.module('scDateTime', [])
 				else Math.max 1, Math.min 12, @_hours + inc
 				if isNaN @_hours then @_hours = 0
 			_incMinutes: (inc) ->
-				@_minutes = Math.max 0, Math.min 59, @_minutes + inc
+				@_minutes = Math.max 0, Math.min 59, @_minutes + (scope._incMinutes * inc)
 				if isNaN @_minutes then @_minutes = 0
 			setAM: (b = not @isAM()) ->
 				if b and not @isAM()
