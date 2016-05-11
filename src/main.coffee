@@ -200,6 +200,7 @@ angular.module('scDateTime', [])
 				scope.calendar.monthChange save
 		scope.clock =
 			_minutes: 0
+			_minutesString: '00'
 			_hours: 0
 			_incHours: (inc) ->
 				@_hours = if scope._hours24
@@ -217,9 +218,12 @@ angular.module('scDateTime', [])
 				scope.saveUpdateDate()
 			isAM: -> scope.date.getHours() < 12
 		scope.$watch 'clock._minutes', (val, oldVal) ->
-			if val? and val isnt scope.date.getMinutes() and not isNaN(val) and 0 <= val <= 59
-				scope.date.setMinutes val
-				scope.saveUpdateDate()
+			if val? and not isNaN(val) and 0 <= val <= 59
+				scope.clock._minutesString = if val > 9 then val.toString() else ("0"+val).slice(-2)
+				
+				if val isnt scope.date.getMinutes()
+					scope.date.setMinutes val
+					scope.saveUpdateDate()
 		scope.$watch 'clock._hours', (val) ->
 			if val? and not isNaN(val)
 				if not scope._hours24

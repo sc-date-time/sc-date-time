@@ -36,7 +36,7 @@
 						i.fa.fa-caret-up
 					md-button.hours.down(type="button" ng-click="clock._incHours(-1)" aria-label="{{:: translations.decrementHours}}")
 						i.fa.fa-caret-down
-					input(type="number" min="0" max="59" ng-model="clock._minutes")
+					input(type="text" ng-model="clock._minutesString")
 					md-button.minutes.up(type="button" ng-click="clock._incMinutes(1)" aria-label="{{:: translations.incrementMinutes}}")
 						i.fa.fa-caret-up
 					md-button.minutes.down(type="button" ng-click="clock._incMinutes(-1)" aria-label="{{:: translations.decrementMinutes}}")
