@@ -97,16 +97,19 @@ angular.module('scDateTime', [])
 		scope.restrictions =
 			mindate: undefined
 			maxdate: undefined
+			
+		scope.addZero = (min) -> if min > 9 then min.toString() else ("0"+min).slice(-2)
 		scope.setDate = (newVal, save=true) ->
 			scope.date = if newVal then new Date newVal else new Date()
 			scope.calendar._year = scope.date.getFullYear()
 			scope.calendar._month = scope.date.getMonth()
-			scope.clock._minutes = scope.date.getMinutes()
+			scope.clock._minutes = scope.addZero scope.date.getMinutes()
 			scope.clock._hours = if scope._hours24 then scope.date.getHours() else scope.date.getHours() % 12
 			if not scope._hours24 and scope.clock._hours is 0 then scope.clock._hours = 12
 			scope.calendar.yearChange save
 		scope.display =
 			fullTitle: ->
+				console.log 'Date: ', scope.date
 				_timeString = if scope._hours24 then 'HH:mm' else 'h:mm a'
 				if scope._displayMode is 'full' and not scope._verticalMode
 					_dateFilter scope.date, "EEEE d MMMM yyyy, #{_timeString}"
@@ -199,8 +202,7 @@ angular.module('scDateTime', [])
 				scope.calendar._months = scope.calendar._allMonths.slice i, len + 1
 				scope.calendar.monthChange save
 		scope.clock =
-			_minutes: 0
-			_minutesString: '00'
+			_minutes: '00'
 			_hours: 0
 			_incHours: (inc) ->
 				@_hours = if scope._hours24
@@ -208,8 +210,7 @@ angular.module('scDateTime', [])
 				else Math.max 1, Math.min 12, @_hours + inc
 				if isNaN @_hours then @_hours = 0
 			_incMinutes: (inc) ->
-				@_minutes = Math.max 0, Math.min 59, @_minutes + inc
-				if isNaN @_minutes then @_minutes = 0
+				@_minutes = scope.addZero(Math.max 0, Math.min 59, parseInt(@_minutes) + inc).toString()
 			setAM: (b = not @isAM()) ->
 				if b and not @isAM()
 					scope.date.setHours(scope.date.getHours() - 12)
@@ -218,12 +219,12 @@ angular.module('scDateTime', [])
 				scope.saveUpdateDate()
 			isAM: -> scope.date.getHours() < 12
 		scope.$watch 'clock._minutes', (val, oldVal) ->
-			if val? and not isNaN(val) and 0 <= val <= 59
-				scope.clock._minutesString = if val > 9 then val.toString() else ("0"+val).slice(-2)
-				
-				if val isnt scope.date.getMinutes()
-					scope.date.setMinutes val
-					scope.saveUpdateDate()
+			return unless val
+			
+			intMin = parseInt val
+			if not isNaN(intMin) and 0 <= intMin <= 59 and intMin isnt scope.date.getMinutes()
+				scope.date.setMinutes intMin
+				scope.saveUpdateDate()
 		scope.$watch 'clock._hours', (val) ->
 			if val? and not isNaN(val)
 				if not scope._hours24
