@@ -167,7 +167,6 @@
           scope.display = {
             fullTitle: function() {
               var _timeString;
-              console.log('Date: ', scope.date);
               _timeString = scope._hours24 ? 'HH:mm' : 'h:mm a';
               if (scope._displayMode === 'full' && !scope._verticalMode) {
                 return _dateFilter(scope.date, "EEEE d MMMM yyyy, " + _timeString);

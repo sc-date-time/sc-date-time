@@ -109,7 +109,6 @@ angular.module('scDateTime', [])
 			scope.calendar.yearChange save
 		scope.display =
 			fullTitle: ->
-				console.log 'Date: ', scope.date
 				_timeString = if scope._hours24 then 'HH:mm' else 'h:mm a'
 				if scope._displayMode is 'full' and not scope._verticalMode
 					_dateFilter scope.date, "EEEE d MMMM yyyy, #{_timeString}"
