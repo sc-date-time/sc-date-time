@@ -49,7 +49,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "prepublish": "in-publish && npm run lint && gulp",
+    "prepublish": "in-publish && npm run lint && gulp || not-in-publish",
     "test": "gulp test"
   },
   "repository": {
