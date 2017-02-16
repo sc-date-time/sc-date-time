@@ -101,14 +101,14 @@ gulp.task('compile', ['compile:main'], cb => del(['dist/*.temp'], cb));
 */
 const releaseVersion = importance =>
   // get all the files to bump version in
-  gulp.src(['./package.json', './bower.json'])
+  gulp.src(['./package.json'])
     // bump the version number in those files
     .pipe(bump({ type: importance }))
     // save it back to filesystem
     .pipe(gulp.dest('./'))
 ;
 gulp.task('tagversion', () =>
-  gulp.src(['./package.json', './bower.json', './changelog.md', './dist/*'])
+  gulp.src(['./package.json', './changelog.md', './dist/*'])
     // commit the changed version number
     .pipe(git.commit('chore(release): Bump Version Number'))
     // Filter down to only one file

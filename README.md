@@ -14,21 +14,8 @@ scDateTime (formerly mdDateTime)
 
 ## Where to get it
 
-**Via Bower:**
-
-Run `bower install sc-date-time` from the command line.
-Include script tags similar to the following:
-```html
-<link rel='stylesheet' href='/bower_components/sc-date-time/dist/sc-date-time.css'>
-<script src='/bower_components/sc-date-time/dist/sc-date-time.js'></script>
-```
-
-**Via Github:**
-
-Download the code from [https://github.com/simeonc/sc-date-time/releases/latest](https://github.com/simeonc/sc-date-time/releases/latest), unzip the files then add script tags similar to the following:
-```html
-<link rel='stylesheet' href='/path/to/unzipped/files/sc-date-time/dist/sc-date-time.css'>
-<script src='/path/to/unzipped/files/sc-date-time/dist/sc-date-time.js'></script>
+```sh
+npm install md-date-time
 ```
 
 ## Usage
