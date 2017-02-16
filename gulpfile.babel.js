@@ -1,11 +1,10 @@
 // dependencies
 import fs from 'fs';
-import path from 'path';
 import gulp from 'gulp';
 import git from 'gulp-git';
 import bump from 'gulp-bump';
 import filter from 'gulp-filter';
-import tag_version from 'gulp-tag-version';
+import tagVersion from 'gulp-tag-version';
 import del from 'del';
 import concat from 'gulp-concat-util';
 import order from 'gulp-order';
@@ -25,11 +24,9 @@ import htmlmin from 'gulp-htmlmin';
 gulp.task('clean:dist', cb => del(['dist/*'], cb));
 gulp.task('compile:jade', ['clean:dist'], () =>
   gulp.src(['./src/*.jade'])
-    .pipe(jade({
-  pretty: true })).pipe(rename({
-    prefix: 'scDateTime-',
-    extname: '.tpl',
-  })).pipe(gulp.dest('dist'))
+    .pipe(jade({ pretty: true }))
+    .pipe(rename({ prefix: 'scDateTime-', extname: '.tpl' }))
+    .pipe(gulp.dest('dist'))
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(ngtemplate({ module: 'scDateTime' }))
     .pipe(rename({ extname: '.tpl.temp' })) // for temp file cleanup
@@ -62,7 +59,8 @@ gulp.task('compile:javascript', ['compile:babel'], () => {
   See README.md for requirements and use.
 */\
 `,
-    )).pipe(gulp.dest('dist'));
+    ))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('compile:stylus', ['clean:dist'], () => {
@@ -80,7 +78,8 @@ gulp.task('compile:stylus', ['clean:dist'], () => {
   See README.md for requirements and use.
 */\
 `,
-    )).pipe(rename('sc-date-time.css'))
+    ))
+    .pipe(rename('sc-date-time.css'))
     .pipe(gulp.dest('dist'));
 });
 
@@ -115,7 +114,7 @@ gulp.task('tagversion', () =>
     // Filter down to only one file
     .pipe(filter('package.json'))
     // **tag it in the repository**
-    .pipe(tag_version()),
+    .pipe(tagVersion()),
 );
 
 gulp.task('changelog', (cb) => {
