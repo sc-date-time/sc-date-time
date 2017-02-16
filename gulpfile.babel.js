@@ -37,6 +37,7 @@ gulp.task('compile:babel', ['compile:jade'], () =>
     // Lint the coffescript
     .pipe(babel({
       presets: [['env', {
+        modules: 'umd',
         targets: {
           browsers: 'last 2 versions',
         },

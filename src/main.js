@@ -1,4 +1,10 @@
-angular.module('scDateTime', [])
+import angular from 'angular';
+
+const MODULE_NAME = 'scDateTime';
+
+export default MODULE_NAME;
+
+angular.module(MODULE_NAME, [])
 .value('scDateTimeConfig', {
   defaultTheme: 'material',
   autosave: false,

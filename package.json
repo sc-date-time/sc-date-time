@@ -14,7 +14,11 @@
   "license": "MIT",
   "homepage": "http://simeonc.github.io/md-date-time",
   "main": "./dist/sc-date-time.min.js",
+  "peerDependencies": {
+    "angular": "^1.2"
+  },
   "devDependencies": {
+    "angular": "^1.6.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babel-register": "^6.23.0",
