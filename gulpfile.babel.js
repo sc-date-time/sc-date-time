@@ -16,8 +16,7 @@ import changelog from 'conventional-changelog';
 import stylus from 'gulp-stylus';
 import autoprefixer from 'gulp-autoprefixer';
 
-import coffee from 'gulp-coffee';
-import coffeelint from 'gulp-coffeelint';
+import babel from 'gulp-babel';
 
 import jade from 'gulp-jade';
 import ngtemplate from 'gulp-ngtemplate';
@@ -36,17 +35,20 @@ gulp.task('compile:jade', ['clean:dist'], () =>
 		.pipe(rename({extname: '.tpl.temp'})) // for temp file cleanup
 		.pipe(gulp.dest('dist'))
 );
-gulp.task('compile:coffee', ['compile:jade'], () =>
-	gulp.src(['./src/main.coffee'])
+gulp.task('compile:babel', ['compile:jade'], () =>
+	gulp.src(['./src/main.js'])
 		// Lint the coffescript
-		.pipe(coffeelint())
-		.pipe(coffeelint.reporter())
-		.pipe(coffeelint.reporter('fail'))
-		.pipe(coffee({bare: true}))
+    .pipe(babel({
+        presets: [['env', {
+          targets: {
+            browsers: 'last 2 versions',
+          },
+        }]],
+    }))
 		.pipe(rename('sc-date-time.js'))
 		.pipe(gulp.dest('dist'))
 );
-gulp.task('compile:javascript', ['compile:coffee'], function() {
+gulp.task('compile:javascript', ['compile:babel'], function() {
 	let pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 	return gulp.src(['./dist/sc-date-time.js','./dist/*.tpl.temp'])
 		.pipe(order(['dist/sc-date-time.js','dist/*.tpl.temp']))
