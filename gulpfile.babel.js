@@ -117,7 +117,7 @@ gulp.task('tagversion', () =>
     .pipe(tagVersion()),
 );
 
-gulp.task('changelog', (cb) => {
+gulp.task('changelog', cb => {
   const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
   return changelog({
     version: pkg.version,

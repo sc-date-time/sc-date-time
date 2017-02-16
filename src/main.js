@@ -40,7 +40,7 @@ angular.module('scDateTime', [])
         return tAttrs.theme.indexOf('/') <= 0 ? `scDateTime-${tAttrs.theme}.tpl` : tAttrs.theme;
       },
       link(scope, element, attrs, ngModel) {
-        attrs.$observe('defaultMode', (val) => {
+        attrs.$observe('defaultMode', val => {
           if ((val !== 'time') && (val !== 'date')) { val = scDateTimeConfig.defaultMode; }
           return scope._mode = val;
         });
@@ -48,27 +48,27 @@ angular.module('scDateTime', [])
         scope._defaultDate = (val != null) && Date.parse(val) ? Date.parse(val)
         : scDateTimeConfig.defaultDate,
       );
-        attrs.$observe('displayMode', (val) => {
+        attrs.$observe('displayMode', val => {
           if ((val !== 'full') && (val !== 'time') && (val !== 'date')) { val = scDateTimeConfig.displayMode; }
           return scope._displayMode = val;
         });
         attrs.$observe('orientation', val => scope._verticalMode = (val != null) ? val === 'true' : scDateTimeConfig.defaultOrientation);
         attrs.$observe('compact', val => scope._compact = (val != null) ? val === 'true' : scDateTimeConfig.compact);
         attrs.$observe('displayTwentyfour', val => scope._hours24 = (val != null) ? val : scDateTimeConfig.displayTwentyfour);
-        attrs.$observe('mindate', (val) => {
+        attrs.$observe('mindate', val => {
           if ((val != null) && Date.parse(val)) {
             scope.restrictions.mindate = new Date(val);
             return scope.restrictions.mindate.setHours(0, 0, 0, 0);
           }
         });
-        attrs.$observe('maxdate', (val) => {
+        attrs.$observe('maxdate', val => {
           if ((val != null) && Date.parse(val)) {
             scope.restrictions.maxdate = new Date(val);
             return scope.restrictions.maxdate.setHours(23, 59, 59, 999);
           }
         });
         scope._weekdays = scope._weekdays || scDateTimeI18n.weekdays;
-        scope.$watch('_weekdays', (value) => {
+        scope.$watch('_weekdays', value => {
           if ((value == null) || !angular.isArray(value)) {
             return scope._weekdays = scDateTimeI18n.weekdays;
           }
@@ -285,7 +285,7 @@ angular.module('scDateTime', [])
             return scope.saveUpdateDate();
           }
         });
-        scope.$watch('clock._hours', (val) => {
+        scope.$watch('clock._hours', val => {
           if ((val != null) && !isNaN(val)) {
             if (!scope._hours24) {
               if (val === 24) {
