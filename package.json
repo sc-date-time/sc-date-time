@@ -1,6 +1,6 @@
 {
   "name": "md-date-time",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An implementation of the Material Design Date-Time picker",
   "maintainers": [
     {
@@ -12,6 +12,9 @@
   ],
   "license": "MIT",
   "homepage": "http://simeonc.github.io/md-date-time",
+  "files": [
+      "dist"
+  ],
   "main": "./dist/sc-date-time.js",
   "peerDependencies": {
     "angular": "^1.2"
