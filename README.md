@@ -15,7 +15,7 @@ scDateTime (formerly mdDateTime)
 ## Where to get it
 
 ```sh
-npm install md-date-time
+npm install sc-date-time
 ```
 
 ## Usage

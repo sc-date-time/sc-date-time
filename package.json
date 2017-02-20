@@ -1,5 +1,5 @@
 {
-  "name": "md-date-time",
+  "name": "sc-date-time",
   "version": "0.3.0",
   "description": "An implementation of the Material Design Date-Time picker",
   "maintainers": [
@@ -11,7 +11,7 @@
     "AngularJS"
   ],
   "license": "MIT",
-  "homepage": "http://simeonc.github.io/md-date-time",
+  "homepage": "https://github.com/sc-date-time/sc-date-time/",
   "files": [
     "dist"
   ],
@@ -57,7 +57,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/simeonc/sc-date-time.git"
+    "url": "git://github.com/sc-date-time/sc-date-time.git"
   },
   "dependencies": {}
 }
