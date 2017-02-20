@@ -43,11 +43,14 @@ angular.module(MODULE_NAME, [])
       require: 'ngModel',
       templateUrl(tElement, tAttrs) {
         if ((tAttrs.theme == null) || (tAttrs.theme === '')) { tAttrs.theme = scDateTimeConfig.defaultTheme; }
+
         return tAttrs.theme.indexOf('/') <= 0 ? `scDateTime-${tAttrs.theme}.tpl` : tAttrs.theme;
       },
+
       link(scope, element, attrs, ngModel) {
         attrs.$observe('defaultMode', val => {
           if ((val !== 'time') && (val !== 'date')) { val = scDateTimeConfig.defaultMode; }
+
           return scope._mode = val;
         });
         attrs.$observe('defaultDate', val =>
@@ -56,6 +59,7 @@ angular.module(MODULE_NAME, [])
       );
         attrs.$observe('displayMode', val => {
           if ((val !== 'full') && (val !== 'time') && (val !== 'date')) { val = scDateTimeConfig.displayMode; }
+
           return scope._displayMode = val;
         });
         attrs.$observe('orientation', val => scope._verticalMode = (val != null) ? val === 'true' : scDateTimeConfig.defaultOrientation);
@@ -82,7 +86,7 @@ angular.module(MODULE_NAME, [])
 
         ngModel.$render = () => scope.setDate(ngModel.$modelValue != null ? ngModel.$modelValue : scope._defaultDate, (ngModel.$modelValue != null));
 
-      // Select contents of inputs when foccussed into
+        // Select contents of inputs when foccussed into
         angular.forEach(element.find('input'),
         input =>
           angular.element(input).on('focus', () => setTimeout((() => input.select()), 10)),
@@ -93,6 +97,7 @@ angular.module(MODULE_NAME, [])
           scope.saveUpdateDate = () => ngModel.$setViewValue(scope.date);
           return scope.autosave = true;
         }
+
         const saveFn = $parse(attrs.onSave);
         const cancelFn = $parse(attrs.onCancel);
         scope.saveUpdateDate = () => true;
@@ -101,11 +106,13 @@ angular.module(MODULE_NAME, [])
           ngModel.$setViewValue(new Date(scope.date));
           return saveFn(scope.$parent, { $value: new Date(scope.date) });
         };
+
         return scope.cancel = function () {
           cancelFn(scope.$parent, {});
           return ngModel.$render();
         };
       },
+
       controller: ['$scope', 'scDateTimeI18n', function (scope, scDateTimeI18n) {
         let i;
         scope._defaultDate = scDateTimeConfig.defaultDate;
@@ -120,17 +127,23 @@ angular.module(MODULE_NAME, [])
           maxdate: undefined,
         };
 
-        scope.addZero = function (min) { if (min > 9) { return min.toString(); } return (`0${min}`).slice(-2); };
+        scope.addZero = function (min) {
+          if (min > 9) { return min.toString(); } return (`0${min}`).slice(-2);
+        };
+
         scope.setDate = function (newVal, save) {
           if (save == null) { save = true; }
+
           scope.date = newVal ? new Date(newVal) : new Date();
           scope.calendar._year = scope.date.getFullYear();
           scope.calendar._month = scope.date.getMonth();
           scope.clock._minutes = scope.addZero(scope.date.getMinutes());
           scope.clock._hours = scope._hours24 ? scope.date.getHours() : scope.date.getHours() % 12;
           if (!scope._hours24 && (scope.clock._hours === 0)) { scope.clock._hours = 12; }
+
           return scope.calendar.yearChange(save);
         };
+
         scope.display = {
           fullTitle() {
             const _timeString = scope._hours24 ? 'HH:mm' : 'h:mm a';
@@ -142,6 +155,7 @@ angular.module(MODULE_NAME, [])
               return _dateFilter(scope.date, 'EEE d MMM yyyy');
             } return _dateFilter(scope.date, `d MMM yyyy, ${_timeString}`);
           },
+
           title() {
             if (scope._mode === 'date') {
               return _dateFilter(scope.date, (scope._displayMode === 'date' ? 'EEEE' : `EEEE ${
@@ -150,11 +164,13 @@ angular.module(MODULE_NAME, [])
             );
             } return _dateFilter(scope.date, 'MMMM d yyyy');
           },
+
           super() {
             if (scope._mode === 'date') {
               return _dateFilter(scope.date, 'MMM');
             } return '';
           },
+
           main() {
             return $sce.trustAsHtml(
           scope._mode === 'date' ? _dateFilter(scope.date, 'd')
@@ -163,6 +179,7 @@ angular.module(MODULE_NAME, [])
             : `${_dateFilter(scope.date, 'h:mm')}<small>${_dateFilter(scope.date, 'a')}</small>`,
         );
           },
+
           sub() {
             if (scope._mode === 'date') {
               return _dateFilter(scope.date, 'yyyy');
@@ -179,62 +196,80 @@ angular.module(MODULE_NAME, [])
             for (i = 0; i <= 11; i++) {
               result.push(_dateFilter(new Date(0, i), 'MMMM'));
             }
+
             return result;
           })()),
           offsetMargin() { return `${new Date(this._year, this._month).getDay() * 2.7}rem`; },
+
           isVisible(d) { return new Date(this._year, this._month, d).getMonth() === this._month; },
+
           isDisabled(d) {
             const currentDate = new Date(this._year, this._month, d);
             const { mindate } = scope.restrictions;
             const { maxdate } = scope.restrictions;
             return ((mindate != null) && (currentDate < mindate)) || ((maxdate != null) && (currentDate > maxdate));
           },
+
           isPrevMonthButtonHidden() {
             const date = scope.restrictions.mindate;
             return (date != null) && (this._month <= date.getMonth()) && (this._year <= date.getFullYear());
           },
+
           isNextMonthButtonHidden() {
             const date = scope.restrictions.maxdate;
             return (date != null) && (this._month >= date.getMonth()) && (this._year >= date.getFullYear());
           },
+
           class(d) {
             let classString = '';
             if ((scope.date != null) && (new Date(this._year, this._month, d).getTime() === new Date(scope.date.getTime()).setHours(0,
             0, 0, 0))) {
               classString += 'selected';
             }
+
             if (new Date(this._year, this._month, d).getTime() === new Date().setHours(0, 0, 0, 0)) {
               classString += ' today';
             }
+
             return classString;
           },
+
           select(d) {
             scope.date.setFullYear(this._year, this._month, d);
             return scope.saveUpdateDate();
           },
+
           monthChange(save) {
             if (save == null) { save = true; }
+
             if ((this._year == null) || isNaN(this._year)) { this._year = new Date().getFullYear(); }
+
             const { mindate } = scope.restrictions;
             const { maxdate } = scope.restrictions;
             if ((mindate != null) && (mindate.getFullYear() === this._year) && (mindate.getMonth() >= this._month)) {
               this._month = Math.max(mindate.getMonth(), this._month);
             }
+
             if ((maxdate != null) && (maxdate.getFullYear() === this._year) && (maxdate.getMonth() <= this._month)) {
               this._month = Math.min(maxdate.getMonth(), this._month);
             }
+
             scope.date.setFullYear(this._year, this._month);
             if (scope.date.getMonth() !== this._month) { scope.date.setDate(0); }
+
             if ((mindate != null) && (scope.date < mindate)) {
               scope.date.setDate(mindate.getTime());
               scope.calendar.select(mindate.getDate());
             }
+
             if ((maxdate != null) && (scope.date > maxdate)) {
               scope.date.setDate(maxdate.getTime());
               scope.calendar.select(maxdate.getDate());
             }
+
             if (save) { return scope.saveUpdateDate(); }
           },
+
           _incMonth(months) {
             this._month += months;
             while ((this._month < 0) || (this._month > 11)) {
@@ -246,11 +281,15 @@ angular.module(MODULE_NAME, [])
                 this._year++;
               }
             }
+
             return this.monthChange();
           },
+
           yearChange(save) {
             if (save == null) { save = true; }
+
             if ((scope.calendar._year == null) || (scope.calendar._year === '')) { return; }
+
             const { mindate } = scope.restrictions;
             const { maxdate } = scope.restrictions;
             i = (mindate != null) && (mindate.getFullYear() === scope.calendar._year) ? mindate.getMonth() : 0;
@@ -268,18 +307,23 @@ angular.module(MODULE_NAME, [])
           : Math.max(1, Math.min(12, this._hours + inc));
             if (isNaN(this._hours)) { return this._hours = 0; }
           },
+
           _incMinutes(inc) {
             return this._minutes = scope.addZero(Math.max(0, Math.min(59, parseInt(this._minutes) + inc))).toString();
           },
+
           setAM(b) {
             if (b == null) { b = !this.isAM(); }
+
             if (b && !this.isAM()) {
               scope.date.setHours(scope.date.getHours() - 12);
             } else if (!b && this.isAM()) {
               scope.date.setHours(scope.date.getHours() + 12);
             }
+
             return scope.saveUpdateDate();
           },
+
           isAM() { return scope.date.getHours() < 12; },
         };
         scope.$watch('clock._minutes', (val, oldVal) => {
@@ -300,6 +344,7 @@ angular.module(MODULE_NAME, [])
                 val = 0;
               } else if (!scope.clock.isAM()) { val += 12; }
             }
+
             if (val !== scope.date.getHours()) {
               scope.date.setHours(val);
               return scope.saveUpdateDate();
@@ -311,8 +356,10 @@ angular.module(MODULE_NAME, [])
           scope.setDate();
           return scope.saveUpdateDate();
         };
+
         scope.modeClass = function () {
           if (scope._displayMode != null) { scope._mode = scope._displayMode; }
+
           return `${scope._verticalMode ? 'vertical ' : ''}${
         scope._displayMode === 'full' ? 'full-mode'
         : scope._displayMode === 'time' ? 'time-only'
@@ -320,10 +367,12 @@ angular.module(MODULE_NAME, [])
         : scope._mode === 'date' ? 'date-mode'
         : 'time-mode'} ${scope._compact ? 'compact' : ''}`;
         };
+
         scope.modeSwitch = () => scope._mode = scope._displayMode != null ? scope._displayMode : scope._mode === 'date' ? 'time' : 'date';
         return scope.modeSwitchText = () => `${scDateTimeI18n.switchTo} ${
         scope._mode === 'date' ? scDateTimeI18n.clock : scDateTimeI18n.calendar}`;
       },
       ],
     };
-  }]);
+  },
+]);

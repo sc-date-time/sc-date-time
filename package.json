@@ -13,7 +13,7 @@
   "license": "MIT",
   "homepage": "http://simeonc.github.io/md-date-time",
   "files": [
-      "dist"
+    "dist"
   ],
   "main": "./dist/sc-date-time.js",
   "peerDependencies": {
