@@ -1,0 +1,11 @@
+sudo: false
+language: node_js
+node_js: 6
+env:
+  global:
+  - BOWER_REPO: "git@github.com:sc-date-time/sc-date-time-dist.git"
+  - COMMIT_AUTHOR_EMAIL: 'sc-date-time-dist@graingert.co.uk'
+cache:
+  directories:
+    - node_modules
+after_success: ./make-bower-build.sh

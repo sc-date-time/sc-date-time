@@ -53,7 +53,7 @@
     "lint": "eslint .",
     "build": "npm run lint && gulp",
     "prepublish": "in-publish && npm run build || not-in-publish",
-    "test": "gulp test"
+    "test": "npm run build"
   },
   "repository": {
     "type": "git",
