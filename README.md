@@ -20,12 +20,22 @@ npm install md-date-time
 
 ## Usage
 
-1. Include `sc-date-time.js` and `sc-date-time.css`.
-2. Add a dependency to `scDateTime` in your app module, for example: ```angular.module('myModule', ['scDateTime'])```.
+1. Include `sc-date-time.js` and `sc-date-time.css`:
+
+   ```js
+   import scDateTime from 'sc-date-time';
+   import 'sc-date-time/dist/sc-date-time.css';
+   ```
+2. Add a dependency to `scDateTime` in your app module:
+
+   ```js
+   angular.module('myModule', [scDateTime])
+   ```
+
 3. Some implementation settings are required to get this useful, but for basic inline use:
-```html
-<time-date-picker ng-model="dateValue"></time-date-picker>
-```
+   ```html
+   <time-date-picker ng-model="dateValue"></time-date-picker>
+   ```
 
 ## Options
 
