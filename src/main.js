@@ -39,7 +39,7 @@ angular.module(MODULE_NAME, [])
     const _formatRFC = 'rfc';
     const _formatISO = 'iso';
 
-    var _dateFormat = _formatDate;
+    let _dateFormat = _formatDate;
 
     return {
       restrict: 'AE',
@@ -55,6 +55,27 @@ angular.module(MODULE_NAME, [])
       },
 
       link(scope, element, attrs, ngModel) {
+        let _setViewValue = () => {
+          let viewValue;
+          switch(_dateFormat){
+            case _formatMilliseconds:
+              viewValue = scope.date.valueOf();
+              break;
+            case _formatRFC:
+              viewValue = scope.date.toString();
+              break;
+            case _formatISO:
+              viewValue = scope.date.toISOString();
+              break;
+            default:
+              viewValue = scope.date;
+              break;
+          }
+
+          ngModel.$setViewValue(viewValue);
+          return viewValue;
+        };
+
         attrs.$observe('defaultMode', val => {
           if ((val !== 'time') && (val !== 'date')) { val = scDateTimeConfig.defaultMode; }
 
@@ -85,8 +106,8 @@ angular.module(MODULE_NAME, [])
           }
         });
         attrs.$observe('dateFormat', val => {
-          var format = _formatDate;
-          if(val === _formatMilliseconds || val === _formatISO || val === _formatRFC) {
+          let format = _formatDate;
+          if (val === _formatMilliseconds || val === _formatISO || val === _formatRFC) {
             format = val;
           }
 
@@ -107,27 +128,6 @@ angular.module(MODULE_NAME, [])
           angular.element(input).on('focus', () => setTimeout((() => input.select()), 10)),
       );
 
-        var _setViewValue = () => {
-          var viewValue;
-          switch(_dateFormat) {
-            case _formatMilliseconds:
-              viewValue = scope.date.valueOf();
-              break;
-            case _formatRFC:
-              viewValue = scope.date.toString();
-              break;
-            case _formatISO:
-              viewValue = scope.date.toISOString();
-              break;
-            default:
-              viewValue = scope.date;
-              break;
-          }
-
-          ngModel.$setViewValue(viewValue);
-          return viewValue;
-      };
-
         scope.autosave = false;
         if ((attrs.autosave != null) || scDateTimeConfig.autosave) {
           scope.saveUpdateDate = _setViewValue;
@@ -139,7 +139,7 @@ angular.module(MODULE_NAME, [])
         scope.saveUpdateDate = () => true;
 
         scope.save = function () {
-          var viewValue = _setViewValue();
+          let viewValue = _setViewValue();
           return saveFn(scope.$parent, { $value: viewValue });
         };
 
