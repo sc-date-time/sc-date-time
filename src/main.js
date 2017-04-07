@@ -55,9 +55,9 @@ angular.module(MODULE_NAME, [])
       },
 
       link(scope, element, attrs, ngModel) {
-        let _setViewValue = () => {
+        const _setViewValue = () => {
           let viewValue;
-          switch(_dateFormat){
+          switch (_dateFormat) {
             case _formatMilliseconds:
               viewValue = scope.date.valueOf();
               break;
@@ -139,8 +139,7 @@ angular.module(MODULE_NAME, [])
         scope.saveUpdateDate = () => true;
 
         scope.save = function () {
-          let viewValue = _setViewValue();
-          return saveFn(scope.$parent, { $value: viewValue });
+          return saveFn(scope.$parent, { $value: _setViewValue() });
         };
 
         return scope.cancel = function () {
