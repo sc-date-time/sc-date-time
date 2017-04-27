@@ -106,7 +106,7 @@ angular.module(MODULE_NAME, [])
           }
         });
         attrs.$observe('dateFormat', val => {
-          const changeFormat =  (val === _formatMilliseconds || val === _formatISO || val === _formatRFC);
+          const changeFormat = (val === _formatMilliseconds || val === _formatISO || val === _formatRFC);
           const format = (changeFormat) ? val : _formatDate;
 
           return _dateFormat = format;
